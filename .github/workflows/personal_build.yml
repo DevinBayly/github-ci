@@ -30,7 +30,8 @@ jobs:
       # Keep going on other deployments if anything bloops
       fail-fast: false
       matrix:
-        changed_file: 'vulkan_test'
+        changed_file: 
+          - 'vulkan_test'
         singularity_version:
           - '3.8.1'
 
