@@ -8,5 +8,5 @@ apt update -q
 apt install -y build-essential cmake pkg-config software-properties-common
 apt install -y curl wget gnupg
 wget "https://us.download.nvidia.com/XFree86/Linux-x86_64/460.91.03/NVIDIA-Linux-x86_64-460.91.03.run"
-bash NVIDIA-Linux-x86_64-460.91.03.run
+bash NVIDIA-Linux-x86_64-460.91.03.run --ui=none
 apt install -y vulkan-tools libvulkan-dev vulkan-validationlayers-dev spirv-tools libglfw3-dev libglm-dev
