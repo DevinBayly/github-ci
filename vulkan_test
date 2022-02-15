@@ -1,8 +1,16 @@
 bootstrap: docker
-from: nvidia/cuda:11.3.1-devel-ubuntu20.04
+from: ubuntu:20.04
 
 %post
+
 export DEBIAN_FRONTEND=noninteractive
 apt update -q
+apt install -y curl wget
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-ubuntu1804.pin
+mv cuda-ubuntu1804.pin /etc/apt/preferences.d/cuda-repository-pin-600
+apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/7fa2af80.pub
+add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/ /"
+apt-get update
+apt-get -y install cuda
 apt install -y vulkan-tools libvulkan-dev vulkan-validationlayers-dev spirv-tools libglfw3-dev libglm-dev
 apt install -y build-essential cmake pkg-config software-properties-common
