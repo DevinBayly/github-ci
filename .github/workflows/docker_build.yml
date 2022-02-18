@@ -46,7 +46,8 @@ jobs:
         env:
           recipe: ${{ matrix.changed_file }}
         run: |
-          docker build . -f blender_image -t blender:latest
+          docker build . -f blender_image -t ghcr.io/devinbayly/blender:latest
+
 
       - name: Login and Deploy Container      
         run: |
