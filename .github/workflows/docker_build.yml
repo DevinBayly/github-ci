@@ -30,7 +30,7 @@ jobs:
       # Keep going on other deployments if anything bloops
       fail-fast: false
       matrix:
-        changed_file: ${{fromJSON(changes.outputs.changed_file)}}
+        changed_file: ${{ fromJSON(needs.changes.outputs.changed_file) }}
 
     name: Check ${{ matrix.changed_file }}
     steps:
