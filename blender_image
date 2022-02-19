@@ -5,3 +5,7 @@ RUN apt install -y wget curl
 RUN wget "https://mirror.clarkson.edu/blender/release/Blender2.93/blender-2.93.8-linux-x64.tar.xz"
 RUN apt install -y xz-utils
 RUN tar xf "blender-2.93.8-linux-x64.tar.xz" -C  /usr/local/bin
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt install -y  build-essential git subversion cmake libx11-dev libxxf86vm-dev libxcursor-dev libxi-dev libxrandr-dev libxinerama-dev libglew-dev
+
+ENV PATH /usr/local/bin/blender-2.93.8-linux-x64:$PATH
