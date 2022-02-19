@@ -30,9 +30,7 @@ jobs:
       # Keep going on other deployments if anything bloops
       fail-fast: false
       matrix:
-        changed_file: 
-          - 'blender_image'
-
+        changed_file: ${{fromJSON(changes.outputs.changed_file)}}
 
     name: Check ${{ matrix.changed_file }}
     steps:
@@ -46,10 +44,10 @@ jobs:
         env:
           recipe: ${{ matrix.changed_file }}
         run: |
-          docker build . -f blender_image -t ghcr.io/devinbayly/blender:latest
+          docker build . -f ${{matrix.changed_file}} -t ghcr.io/devinbayly/${{matrix.changed_file}}:latest
 
 
       - name: Login and Deploy Container      
         run: |
           echo ${{ secrets.GT_TOKEN }} | docker login ghcr.io -u devinbayly --password-stdin
-          docker push  ghcr.io/devinbayly/blender:latest
+          docker push  ghcr.io/devinbayly/${{matrix.changed_file}}:latest
