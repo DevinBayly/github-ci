@@ -8,3 +8,7 @@ apt install -y build-essential cmake pkg-config software-properties-common
 apt install -y curl wget gnupg
 apt install -y libxxf86vm-dev libxi-dev
 apt install -y vulkan-tools libvulkan-dev vulkan-validationlayers-dev spirv-tools libglfw3-dev libglm-dev
+wget "https://storage.googleapis.com/shaderc/artifacts/prod/graphics_shader_compiler/shaderc/linux/continuous_gcc_release/380/20220202-124800/install.tgz"
+tar xf install.tgz
+mv install /opt
+chmod -R +a /opt
