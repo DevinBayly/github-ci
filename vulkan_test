@@ -5,4 +5,4 @@ RUN apt-get install -y build-essential cmake pkg-config software-properties-comm
 RUN wget "https://storage.googleapis.com/shaderc/artifacts/prod/graphics_shader_compiler/shaderc/linux/continuous_gcc_release/380/20220202-124800/install.tgz"
 RUN tar xf install.tgz
 RUN mv install /opt
-RUN chmod -R +a /opt
+RUN chmod -R a+rwx /opt
