@@ -13,3 +13,6 @@ ENV OUSTER_SDK_PATH=/ouster_example
 RUN python3 -m pip install --user --upgrade pip
 RUN python3 -m pip wheel --no-deps $OUSTER_SDK_PATH/python
 RUN python3 -m pip install $OUSTER_SDK_PATH/python
+RUN python3 -m pip install pillow
+RUN python3 -m pip install tqdm
+RUN python3 -m pip install jupyter
