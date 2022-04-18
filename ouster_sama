@@ -16,3 +16,4 @@ RUN python3 -m pip install $OUSTER_SDK_PATH/python
 RUN python3 -m pip install pillow
 RUN python3 -m pip install tqdm
 RUN python3 -m pip install jupyter
+RUN apt install -y ffmpeg
