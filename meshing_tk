@@ -3,3 +3,4 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt update --fix-missing
 RUN pip install meshio
 RUN pip install vtk
+RUN apt install -y libgl1-mesa-dev
