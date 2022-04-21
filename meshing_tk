@@ -1,0 +1,5 @@
+FROM continuumio/miniconda3:latest
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt update --fix-missing
+RUN pip install meshio
+RUN pip install vtk
