@@ -1,4 +1,4 @@
-FROM: kitware/vtk:ci-fedora34-20220310
+FROM kitware/vtk:ci-fedora34-20220310
 
 RUN curl "https://www.vtk.org/files/release/9.1/VTK-9.1.0.tar.gz" > vtk.tar
 RUN cat vtk.tar 
