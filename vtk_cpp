@@ -1,0 +1,13 @@
+FROM: kitware/vtk:ci-fedora34-20220310
+
+RUN curl "https://www.vtk.org/files/release/9.1/VTK-9.1.0.tar.gz" > vtk.tar
+RUN cat vtk.tar 
+RUN curl "https://vtk.org/files/release/9.1/VTK-9.1.0.tar.gz" >vtk.tar
+RUN tar xf vtk.tar 
+RUN cd VTK-9.1.0/
+RUN ls
+RUN mkdir build
+RUN cd build
+RUN cmake ../
+RUN make install
+
