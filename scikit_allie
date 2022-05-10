@@ -1,0 +1,7 @@
+from continuumio/miniconda3:latest
+
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt update
+RUN pip install Pillow
+RUN pip install scikit-image
+RUN pip install scikit-learn
