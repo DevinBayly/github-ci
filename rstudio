@@ -1,0 +1,5 @@
+FROM rocker/rstudio:4.2
+
+
+ARG DEBIAN_FRONTEND=noninteractive
+RUN chmod a+rwx /var/run
