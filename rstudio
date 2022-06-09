@@ -13,3 +13,4 @@ RUN ldd /usr/bin/rstudio
 RUN apt install -y libqt5webchannel5
 RUN apt install -y libqt5positioning5
 RUN apt install -y libqt5quick5
+RUN apt install -y zlib1g*
