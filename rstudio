@@ -6,3 +6,10 @@ RUN apt update
 RUN wget "https://download1.rstudio.org/desktop/bionic/amd64/rstudio-2022.02.3-492-amd64.deb"
 RUN apt install -y libxkbcommon*
 RUN dpkg -i rstudio-2022.02.3-492-amd64.deb
+RUN which rstudio
+RUN ldd /usr/bin/rstudio
+RUN apt install -y qt5-default 
+RUN ldd /usr/bin/rstudio
+RUN apt install -y libqt5webchannel5
+RUN apt install -y libqt5positioning5
+RUN apt install -y libqt5quick5
