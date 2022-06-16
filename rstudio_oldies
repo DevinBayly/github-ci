@@ -13,3 +13,6 @@ RUN apt install -y zlib1g*
 RUN echo "all done!"
 RUN apt-get install -y libpq5
 RUN dpkg -i rstudio-2022.02.3-492-amd64.deb
+RUN apt install -y libnss3
+RUN apt-get install -y libasound2-dev
+RUN rstudio
