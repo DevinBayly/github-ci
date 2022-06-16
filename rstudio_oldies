@@ -1,0 +1,15 @@
+FROM rocker/rstudio:3.6.3
+
+
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt update
+RUN wget "https://download1.rstudio.org/desktop/bionic/amd64/rstudio-2022.02.3-492-amd64.deb"
+RUN apt install -y libxkbcommon*
+RUN apt install -y qt5-default 
+RUN apt install -y libqt5webchannel5
+RUN apt install -y libqt5positioning5
+RUN apt install -y libqt5quick5
+RUN apt install -y zlib1g*
+RUN echo "all done!"
+RUN apt-get install -y libpq5
+RUN dpkg -i rstudio-2022.02.3-492-amd64.deb
