@@ -7,6 +7,6 @@ RUN apt-get install -y build-essential scons pkg-config libx11-dev libxcursor-de
 RUN apt install -y clang-11 lld
 RUN update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-11 20
 RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-11 20
-RUN install -y mingw-w64
+RUN apt install -y mingw-w64
 RUN update-alternatives --set x86_64-w64-mingw32-gcc /usr/bin/x86_64-w64-mingw32-gcc-posix
 RUN update-alternatives --set x86_64-w64-mingw32-g++ /usr/bin/x86_64-w64-mingw32-g++-posix
