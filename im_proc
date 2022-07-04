@@ -1,0 +1,25 @@
+from continuumio/miniconda3:latest
+
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt update
+RUN apt -y install libopencv-dev 
+RUN apt -y install build-essential cmake git pkg-config libgtk-3-dev \
+    libavcodec-dev libavformat-dev libswscale-dev libv4l-dev \
+    libxvidcore-dev libx264-dev libjpeg-dev libpng-dev libtiff-dev \
+    gfortran openexr libatlas-base-dev python3-dev python3-numpy \
+    libtbb2 libtbb-dev libdc1394-22-dev libopenexr-dev \
+    libgstreamer-plugins-base1.0-dev libgstreamer1.0-dev
+RUN pip install Pillow
+RUN pip install scikit-image
+RUN pip install scikit-learn
+RUN pip install opencv-python opencv-contrib-python
+RUN wget "https://github.com/Saafke/EDSR_Tensorflow/raw/master/models/EDSR_x2.pb"
+RUN wget "https://github.com/Saafke/EDSR_Tensorflow/raw/master/models/EDSR_x3.pb"
+RUN wget "https://github.com/Saafke/EDSR_Tensorflow/raw/master/models/EDSR_x4.pb"
+RUN wget "https://lh3.googleusercontent.com/1Sm5xJBRhOaIsWmIyoXh8cqoaZv8g8gbDSNaT97SY07hU4VcCqO_PGziO0zVBcy9dcvQRT2uqR63525wGVVILVrqb9G_ZYvxd660Be8zQ0fQrrahFWmxdz71L8yaIzO1kA5OmTkuJM4uaEEnrRTHqn2H5sxAHaBLffy8RSFnHbUdew8gwWw4kxSE9kcCv-JrlpSp6m2ytBx29Re1v_90bZ58N73TqZbNLA7BMBhjMEHWaCh8Wppx6XUOtQpBUKqVDxqqj-Uk4CUytduu2oIxJOUFzpzl1gycQdMDP2gjPVqgkq7xCG886xRX70Vma3bzI7UUzUV34gTqzGUHza1WWYpg-e7Tw8WtOos1ydw-OZ3cjdq33H4owhkQYk7ZjKTuXktDz5doQ85jcQ90sJu6Z1Iy-587GaT0sN5cHT_5-oH34UcVLkxPjs-htXLOnFyNyrdpEpqDXs1NCoBBksNut8c5xIbA4NqyoBjPeXTuvtuI1s09TmnixgFUt1_CV1ystszAZkNp06F835CKcc1g_9HfEhrKJa6oZ0RlTF4XsyW-C4TS2txyiJo46kW3uvX32cNm9zb3AtSkmI1uolfI1TuypPLbqXa4SFbTHqzkrdt6iSlgMbZaTuoG2Fd-y5OVFicT63WkKzq5AreQt7S6Uz6olwGG49ORqMIrBQtK-JsydBxX0KcKg7GBtjNx9oHXq7swggfNTaLiT-AISgtzMlS4eOZf-8u-G12XDoIhWC1Q6qTFNq9S4xTCDwlOaYrQIAGbTbo0grjKCLMMIv2mYHVnL4DPvQz_Jj8=w696-h927-no?authuser=0" -O image.png
+COPY test_super_cv.py test_super_cv.py
+RUN wget "https://github.com/fannymonori/TF-ESPCN/raw/master/export/ESPCN_x2.pb"
+RUN wget "https://github.com/fannymonori/TF-ESPCN/raw/master/export/ESPCN_x3.pb"
+RUN wget "https://github.com/fannymonori/TF-ESPCN/raw/master/export/ESPCN_x4.pb"
+RUN ls
+RUN python3 test_super_cv.py
