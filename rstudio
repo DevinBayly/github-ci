@@ -14,4 +14,9 @@ RUN apt install -y libqt5webchannel5
 RUN apt install -y libqt5positioning5
 RUN apt install -y libqt5quick5
 RUN apt install -y zlib1g*
+RUN wget "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh"
+RUN ls /opt
+RUN bash  Mini* -b -f -p /opt/miniconda3
+RUN ls /opt
+RUN /opt/miniconda3/bin/conda init bash
 RUN echo "all done!"
