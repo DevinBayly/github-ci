@@ -14,13 +14,8 @@ RUN apt install -y libqt5webchannel5
 RUN apt install -y libqt5positioning5
 RUN apt install -y libqt5quick5
 RUN apt install -y zlib1g*
-RUN apt-get install -y libssl-dev openssl 
-RUN wget https://www.python.org/ftp/python/3.6.0/Python-3.6.0.tgz
-RUN tar xzvf Python-3.6.0.tgz
-WORKDIR Python-3.6.0
-RUN ./configure --with-ensurepip=install
-RUN make
-RUN make install
-RUN python3 -m pip install macs2
-WORKDIR /
+RUN wget "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh"
+RUN bash  Mini* -b -f -p /opt/miniconda3
+RUN /opt/miniconda3/bin/conda init bash
+RUN chmod a+rwx -R /opt
 RUN echo "all done!"
