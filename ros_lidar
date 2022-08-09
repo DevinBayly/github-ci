@@ -8,12 +8,13 @@ RUN apt update
 RUN apt install -y ros-noetic-desktop-full
 RUN apt install -y ros-noetic-slam-gmapping wget
 ## dependencies for lego loam
+RUN mkdir Downloads
 RUN wget -O ~/Downloads/gtsam.zip https://github.com/borglab/gtsam/archive/4.0.0-alpha2.zip
 RUN cd ~/Downloads/ && unzip gtsam.zip -d ~/Downloads/
 RUN cd ~/Downloads/gtsam-4.0.0-alpha2/
 RUN mkdir build && cd build
 RUN cmake ..
-RUN make install
+RUN make install -j$(nproc)
 # CMake
 RUN apt-get install -y cmake
 # google-glog + gflags
@@ -28,7 +29,7 @@ RUN tar zxf ceres-solver-2.1.0.tar.gz
 RUN mkdir ceres-bin
 RUN cd ceres-bin
 RUN cmake ../ceres-solver-2.1.0
-RUN make -j3
+RUN make -j$(nproc)
 RUN make test
 # Optionally install Ceres, it can also be exported using CMake which
 # allows Ceres to be used without requiring installation, see the documentation
