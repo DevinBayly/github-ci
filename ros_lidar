@@ -1,12 +1,12 @@
-FROM ros:noetic-ros-base
+FROM ros:ros:melodic-ros-core-bionic
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt update
 # RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 # RUN apt install curl
 # RUN curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add -
 RUN apt update
-RUN apt install -y ros-noetic-desktop-full
-RUN apt install -y ros-noetic-slam-gmapping wget
+RUN apt install -y ros-melodic-desktop-full
+RUN apt install -y ros-melodic-slam-gmapping wget
 ## dependencies for lego loam
 RUN mkdir Downloads
 RUN wget -O ~/Downloads/gtsam.zip https://github.com/borglab/gtsam/archive/4.0.0-alpha2.zip
