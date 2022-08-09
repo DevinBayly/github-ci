@@ -7,3 +7,4 @@ RUN curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt
 RUN apt update
 RUN apt install ros-noetic-desktop-full
 RUN apt install ros-noetic-slam-gmapping
+RUN echo "done"
