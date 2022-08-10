@@ -45,13 +45,16 @@ RUN apt install -y python-rosdep
 RUN /usr/bin/rosdep init
 
 WORKDIR /
-
+RUN apt install ros-melodic-ros-core ros-melodic-pcl-ros \
+     ros-melodic-tf2-geometry-msgs ros-melodic-rviz
 RUN mkdir -p lego_catkin/src
 WORKDIR lego_catkin
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 RUN apt install -y git
 WORKDIR src
 RUN git clone https://github.com/RobustFieldAutonomyLab/LeGO-LOAM
+RUN git clone https://github.com/ouster-lidar/ouster_example.git
 WORKDIR ../
 RUN source /opt/ros/melodic/setup.bash && catkin_make -j1
+RUN apt install build-essential cmake libeigen3-dev libjsoncpp-dev
 RUN echo "done"
