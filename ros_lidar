@@ -7,15 +7,11 @@ RUN apt update
 RUN apt install -y ros-melodic-desktop-full
 RUN apt install -y ros-melodic-slam-gmapping wget
 ## dependencies for lego loam
-RUN mkdir Downloads
 RUN wget -O gtsam.zip https://github.com/borglab/gtsam/archive/4.0.0-alpha2.zip
-RUN unzip gtsam.zip -d ~/Downloads/
-RUN cd ~/Downloads/gtsam-4.0.0-alpha2/
-RUN mkdir build && cd build
-RUN cmake ..
-RUN make install -j$(nproc)
+RUN unzip gtsam.zip 
+RUN ls
+WORKDIR gtsam-4.0.0-alpha2/
 # CMake
-RUN apt-get install -y cmake
 # google-glog + gflags
 RUN apt-get install -y libgoogle-glog-dev libgflags-dev
 # Use ATLAS for BLAS & LAPACK
@@ -24,18 +20,38 @@ RUN apt-get install -y libatlas-base-dev
 RUN apt-get install -y libeigen3-dev
 # SuiteSparse (optional)
 RUN apt-get install -y libsuitesparse-dev
-RUN tar zxf ceres-solver-2.1.0.tar.gz
-RUN mkdir ceres-bin
-RUN cd ceres-bin
-RUN cmake ../ceres-solver-2.1.0
-RUN make -j$(nproc)
-RUN make test
-# Optionally install Ceres, it can also be exported using CMake which
-# allows Ceres to be used without requiring installation, see the documentation
-# for the EXPORT_BUILD_DIR option for more information.
-RUN make install
+RUN mkdir build
+WORKDIR build
+RUN pwd
+RUN apt-get install -y cmake 
+RUN apt install -y build-essential
+RUN cmake ..
+RUN make install -j$(nproc)
+# RUN tar zxf ceres-solver-2.1.0.tar.gz
+# RUN mkdir ceres-bin
+# RUN cd ceres-bin
+# RUN cmake ../ceres-solver-2.1.0
+# RUN make -j$(nproc)
+# RUN make test
+# # Optionally install Ceres, it can also be exported using CMake which
+# # allows Ceres to be used without requiring installation, see the documentation
+# # for the EXPORT_BUILD_DIR option for more information.
+# RUN make install
 
-#pcl stuff
+# #pcl stuff
 RUN apt install -y libpcl-dev
+RUN apt install -y python-rosdep
 
+RUN /usr/bin/rosdep init
+
+WORKDIR /
+
+RUN mkdir -p lego_catkin/src
+WORKDIR lego_catkin
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+RUN apt install -y git
+WORKDIR src
+RUN git clone https://github.com/RobustFieldAutonomyLab/LeGO-LOAM
+WORKDIR ../
+RUN source /opt/ros/melodic/setup.bash && catkin_make -j1
 RUN echo "done"
