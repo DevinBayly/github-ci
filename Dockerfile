@@ -5,10 +5,10 @@ RUN apt install -y wget
 RUN apt install -y ros-melodic-desktop-full
 RUN apt install -y ros-melodic-slam-gmapping wget
 ## dependencies for lego loam
-# RUN wget -O gtsam.zip https://github.com/borglab/gtsam/archive/4.0.0-alpha2.zip
-# RUN unzip gtsam.zip 
-# RUN ls
-# WORKDIR gtsam-4.0.0-alpha2/
+RUN wget -O gtsam.zip https://github.com/borglab/gtsam/archive/4.0.0-alpha2.zip
+RUN unzip gtsam.zip 
+RUN ls
+WORKDIR gtsam-4.0.0-alpha2/
 # # CMake
 # # google-glog + gflags
 # RUN apt-get install -y libgoogle-glog-dev libgflags-dev
