@@ -16,7 +16,7 @@ RUN apt-get install -y libgoogle-glog-dev libgflags-dev
 RUN apt-get install -y libatlas-base-dev
 # Eigen3
 RUN apt-get install -y libeigen3-dev
-SuiteSparse (optional)
+# SuiteSparse (optional)
 RUN apt-get install -y libsuitesparse-dev
 RUN mkdir build
 WORKDIR build
