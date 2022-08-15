@@ -2,7 +2,7 @@ FROM ros:melodic-ros-core-bionic
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt update
 RUN apt install -y wget
-# RUN apt install -y ros-melodic-desktop-full
+RUN apt install -y ros-melodic-desktop-full
 # RUN apt install -y ros-melodic-slam-gmapping wget
 ## dependencies for lego loam
 # RUN wget -O gtsam.zip https://github.com/borglab/gtsam/archive/4.0.0-alpha2.zip
