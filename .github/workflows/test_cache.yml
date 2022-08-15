@@ -39,7 +39,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{github.actor}}/${{ env.IMAGE_NAME }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
@@ -48,5 +48,5 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=registry,ref=${{ github.actor}}/${{ env.IMAGE_NAME }}:latest
+          cache-from: type=registry,ref=${{ steps.meta.outputs.tags }}
           cache-to: type=inline
