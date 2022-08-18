@@ -20,16 +20,16 @@ WORKDIR /
 RUN git clone https://github.com/qgis/QGIS.git
 # #COPY . /QGIS
 
-# # If this directory is changed, also adapt script.sh which copies the directory
-# # if ccache directory is not provided with the source
-# RUN mkdir -p /QGIS/.ccache_image_build
-# ENV CCACHE_DIR=/QGIS/.ccache_image_build
-# RUN ccache -M 1G
-# RUN ccache -s
+# If this directory is changed, also adapt script.sh which copies the directory
+# if ccache directory is not provided with the source
+RUN mkdir -p /QGIS/.ccache_image_build
+ENV CCACHE_DIR=/QGIS/.ccache_image_build
+RUN ccache -M 1G
+RUN ccache -s
 
-# RUN echo "ccache_dir: "$(du -h --max-depth=0 ${CCACHE_DIR})
+RUN echo "ccache_dir: "$(du -h --max-depth=0 ${CCACHE_DIR})
 
-# WORKDIR /QGIS/build
+WORKDIR /QGIS/build
 
 # RUN SUCCESS=OK \
 #   && cmake \
