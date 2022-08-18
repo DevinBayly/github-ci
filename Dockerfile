@@ -18,6 +18,7 @@ ENV LANG=C.UTF-8
 #instead clone the repo to /QGIS
 WORKDIR /
 #RUN git clone https://github.com/qgis/QGIS.git
+RUN apt install -y wget 
 RUN wget "https://github.com/qgis/QGIS/archive/refs/tags/final-3_26_2.tar.gz" -O qgis.tar.gz
 RUN tar xf qgis.tar.gz
 # #COPY . /QGIS
