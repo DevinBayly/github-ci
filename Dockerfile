@@ -21,6 +21,7 @@ WORKDIR /
 RUN apt install -y wget 
 RUN wget "https://github.com/qgis/QGIS/archive/refs/tags/final-3_26_2.tar.gz" -O qgis.tar.gz
 RUN tar xf qgis.tar.gz
+RUN mv QGIS-final-3_26_2 QGIS
 # #COPY . /QGIS
 
 # If this directory is changed, also adapt script.sh which copies the directory
