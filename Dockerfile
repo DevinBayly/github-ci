@@ -31,33 +31,33 @@ RUN echo "ccache_dir: "$(du -h --max-depth=0 ${CCACHE_DIR})
 
 WORKDIR /QGIS/build
 
-# RUN SUCCESS=OK \
-#   && cmake \
-#   -GNinja \
-#   -DUSE_CCACHE=OFF \
-#   -DCMAKE_BUILD_TYPE=Release \
-#   -DCMAKE_INSTALL_PREFIX=/usr \
-#   -DWITH_DESKTOP=ON \
-#   -DWITH_SERVER=ON \
-#   -DWITH_3D=ON \
-#   -DWITH_BINDINGS=ON \
-#   -DWITH_CUSTOM_WIDGETS=ON \
-#   -DBINDINGS_GLOBAL_INSTALL=ON \
-#   -DWITH_STAGED_PLUGINS=ON \
-#   -DWITH_GRASS=ON \
-#   -DSUPPRESS_QT_WARNINGS=ON \
-#   -DDISABLE_DEPRECATED=ON \
-#   -DENABLE_TESTS=OFF \
-#   -DWITH_QSPATIALITE=ON \
-#   -DWITH_APIDOC=OFF \
-#   -DWITH_ASTYLE=OFF \
-#   -DQT5_3DEXTRA_LIBRARY="/usr/lib/x86_64-linux-gnu/libQt53DExtras.so" \
-#   -DQT5_3DEXTRA_INCLUDE_DIR="/QGIS/external/qt3dextra-headers" \
-#   -DQt53DExtras_DIR="/QGIS/external/qt3dextra-headers/cmake/Qt53DExtras" \
-#   -DCMAKE_PREFIX_PATH="/QGIS/external/qt3dextra-headers" \
-#   .. \
-#   && ninja install || SUCCESS=FAILED \
-#   && echo "$SUCCESS" > /QGIS/build_exit_value
+RUN SUCCESS=OK \
+  && cmake \
+  -GNinja \
+  -DUSE_CCACHE=OFF \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DWITH_DESKTOP=ON \
+  -DWITH_SERVER=ON \
+  -DWITH_3D=ON \
+  -DWITH_BINDINGS=ON \
+  -DWITH_CUSTOM_WIDGETS=ON \
+  -DBINDINGS_GLOBAL_INSTALL=ON \
+  -DWITH_STAGED_PLUGINS=ON \
+  -DWITH_GRASS=ON \
+  -DSUPPRESS_QT_WARNINGS=ON \
+  -DDISABLE_DEPRECATED=ON \
+  -DENABLE_TESTS=OFF \
+  -DWITH_QSPATIALITE=ON \
+  -DWITH_APIDOC=OFF \
+  -DWITH_ASTYLE=OFF \
+  -DQT5_3DEXTRA_LIBRARY="/usr/lib/x86_64-linux-gnu/libQt53DExtras.so" \
+  -DQT5_3DEXTRA_INCLUDE_DIR="/QGIS/external/qt3dextra-headers" \
+  -DQt53DExtras_DIR="/QGIS/external/qt3dextra-headers/cmake/Qt53DExtras" \
+  -DCMAKE_PREFIX_PATH="/QGIS/external/qt3dextra-headers" \
+  .. \
+  && ninja install || SUCCESS=FAILED \
+  && echo "$SUCCESS" > /QGIS/build_exit_value
 
 # # Additional run-time dependencies
 # RUN pip3 install jinja2 pygments pexpect && apt install -y expect
