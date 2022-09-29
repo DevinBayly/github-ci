@@ -15,7 +15,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: qgis
+  IMAGE_NAME: xvfb
 
 jobs:
   build-and-push-image:
