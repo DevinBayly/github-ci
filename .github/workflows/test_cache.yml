@@ -15,7 +15,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: xorg_dummy
+  IMAGE_NAME: vtk_xorg_dummy
 
 jobs:
   build-and-push-image:
