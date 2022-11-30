@@ -11,4 +11,4 @@ RUN apt-get install -y  libfftw3-dev
 RUN apt-get install -y  libnetcdf-dev
 RUN apt-get install -y  libnetcdff-dev
 RUN apt-get install -y  libopenmpi-dev
-RUN apt install -y build-essentials
+RUN apt install -y build-essential
