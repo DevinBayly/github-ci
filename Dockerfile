@@ -12,3 +12,5 @@ RUN apt-get install -y  libnetcdf-dev
 RUN apt-get install -y  libnetcdff-dev
 RUN apt-get install -y  libopenmpi-dev
 RUN apt install -y build-essential
+RUN apt install -y python3-pip
+RUN pip install netCDF4
