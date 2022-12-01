@@ -15,7 +15,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: imageflow
+  IMAGE_NAME: rocke3d
 
 jobs:
   build-and-push-image:
