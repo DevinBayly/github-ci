@@ -1,4 +1,4 @@
-FROM selenium:standalone-chrome
+FROM selenium/standalone-chrome
 ARG DEBIAN_FRONTEND=noninteractive
 
 
