@@ -44,7 +44,6 @@ jobs:
         env:
           recipe: ${{ matrix.changed_file }}
         run: |
-          docker pull ghcr.io/devinbayly/${{matrix.changed_file}}:latest || true
           docker build . -f ${{matrix.changed_file}} -t ghcr.io/devinbayly/${{matrix.changed_file}}:latest
 
 
