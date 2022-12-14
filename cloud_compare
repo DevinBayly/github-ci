@@ -1,0 +1,16 @@
+FROM ubuntu:20.04
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt update
+RUN apt install -y libqt5svg5-dev libqt5opengl5-dev qt5-default qttools5-dev qttools5-dev-tools libqt5websockets5-dev
+
+RUN apt install -y git wget build-essential
+RUN git clone --recursive https://github.com/cloudcompare/CloudCompare.git
+RUN ls
+WORKDIR CloudCompare
+RUN mkdir build 
+WORKDIR /CloudCompare/build
+RUN apt install -y cmake
+RUN cmake ..
+RUN cmake --build .
+RUN cmake --install .
