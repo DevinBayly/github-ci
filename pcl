@@ -5,4 +5,5 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt update
 RUN apt install -y libpcl-dev
 RUN apt install -y pcl-tools
+RUN apt install -y build-essential cmake g++
 RUN echo hi
