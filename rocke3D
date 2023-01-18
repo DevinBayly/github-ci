@@ -44,8 +44,10 @@ RUN yum install -y xz
 RUN tar -xvf /opt/socrates_1710.tar.xz
 RUN mv socrates_1710 socrates
 WORKDIR socrates
-RUN tar -xzf /opt/spectral_files.tgz
-RUN tar -xzf /opt/stellar_spectra.tgz
+RUN tar -xzf /opt/spectral_files.tgz --no-same-owner
+RUN tar -xzf /opt/stellar_spectra.tgz --no-same-owner
+## no-same-owner issue covered here https://superuser.com/questions/1435437/how-to-get-around-this-error-when-untarring-an-archive-tar-cannot-change-owner
+## this will probably go away when the creation process is targeted at a non root user
 WORKDIR /opt/modelE2_planet_1.0/external
 ## make below fails wihtout
 RUN yum install -y m4
