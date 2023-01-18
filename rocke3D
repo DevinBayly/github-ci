@@ -1,0 +1,75 @@
+from rockylinux:9.1
+# first document instructions tell us to do the following https://docs.google.com/document/d/1-I8x1Op215f3m3NTtEo_cP2G-lP329pyEEUAzH6Xhog/view
+
+RUN yum install -y gcc
+RUN yum install -y gcc-gfortran
+RUN yum install -y git
+RUN yum install -y wget
+RUN yum --enablerepo=extras install -y epel-release
+RUN yum install -y netcdf.x86_64
+RUN yum install -y netcdf-fortran.x86_64
+RUN yum install -y netcdf-devel.x86_64
+RUN yum install -y netcdf-fortran-devel.x86_64
+RUN yum install -y openmpi.x86_64
+RUN yum install -y openmpi-devel.x86_64
+# !!!! put this in a .bashrc module load mpi/openmpi-x86_64 if you are using mpi
+## starting next document's instructions https://docs.google.com/document/d/1yyI0CDx1wEYbwqRsbvczXpdW2teePZ_NgIePTLFHtNA/view
+RUN wget "https://www.giss.nasa.gov/tools/panoply/download/PanoplyJ-5.2.3.tgz"
+#RUN tar xf PanoplyJ-5.2.3.tgz
+RUN wget "https://www.giss.nasa.gov/tools/panoply/download/PanoplyJ-5.2.3.zip"
+RUN yum install -y unzip
+RUN unzip PanoplyJ*.zip
+# the above needs java so we need to install
+RUN yum install -y java-11-openjdk java-11-openjdk-devel
+WORKDIR /opt
+RUN wget https://simplex.giss.nasa.gov/snapshots/modelE2_planet_1.0.latest.tgz
+RUN wget https://simplex.giss.nasa.gov/snapshots/socrates_1710.tar.xz
+#(BEWARE, below is a 1.6GB file)
+RUN wget https://www.giss.nasa.gov/staff/mway/spectral_files.tgz 
+RUN wget https://www.giss.nasa.gov/staff/mway/stellar_spectra.tgz
+RUN tar xvf modelE2_planet_1.0.latest.tgz
+RUN mv modelE2_planet_1.0.*/ modelE2_planet_1.0
+# might need to switch to being a normal user at this point since things go into the home dir
+WORKDIR /opt/modelE2_planet_1.0/decks
+# unclear, seems like the above already makes these
+RUN make config ModelE_Support=$HOME/ModelE_Support
+RUN mkdir -p $HOME/ModelE_Support/prod_decks
+RUN mkdir -p $HOME/ModelE_Support/prod_runs
+RUN mkdir -p $HOME/ModelE_Support/prod_input_files
+RUN mkdir -p $HOME/ModelE_Support/exec
+RUN mkdir -p $HOME/ModelE_Support/huge_space
+COPY prefilled_modelErc $HOME/.modelErc
+WORKDIR $HOME/ModelE_Support
+RUN yum install -y xz
+RUN tar -xvf /opt/socrates_1710.tar.xz
+RUN mv socrates_1710 socrates
+WORKDIR socrates
+RUN tar -xzf /opt/spectral_files.tgz
+RUN tar -xzf /opt/stellar_spectra.tgz
+WORKDIR /opt/modelE2_planet_1.0/external
+## make below fails wihtout
+RUN yum install -y m4
+## seems to be missing F90 so some weird line gets substituted into the compile flags
+## actually that will happen if the ../config/rules.mk file has the F90 variable unset, perhaps from failing config
+## this relates to the line in their "additionally important .modelErc tweaks" which I ignored
+# theres a section that you need to uncomment or the code won't compile and this populates the F90 varaible
+## might need to pull a gist of the correctly formatted .modelErc file
+RUN make netcdf
+## diagnostic tools now
+WORKDIR /opt/modelE2_planet_1.0/model/mk_diags
+RUN make diags
+## !!! add to the bash file that the mk_diags folder is in path
+# or 
+RUN cp diffreport prtostat write_2d_as_giss4d write_giss2d agcstat sumfiles scaleacc \
+prtolnst prtotj prtisccp prtrvr prtadiurn prtconsrv prtajl prtareg prtaj /usr/bin
+# needed for downloading the various files for running test
+RUN dnf install perl-File-Copy
+## cmp command missing without this
+RUN yum install -y diffutils
+# note that by now we are in the test run sections commands needed are 
+## cd $HOME/modelE2_planet_1.0/decks
+## make rundeck RUNSRC=E1oM20 RUN=E1oM20_Test
+## ../exec/get_input_data -w E1oM20_Test $HOME/ModelE_Support/prod_input_files
+## make clean; make -j setup RUN=E1oM20_Test
+# should perhaps put these in a file somewhere that gets copied in
+COPY test_run_ROCKE3D.sh $HOME/test_run_ROCKE3D
