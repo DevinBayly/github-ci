@@ -56,6 +56,11 @@ RUN yum install -y m4
 ## this relates to the line in their "additionally important .modelErc tweaks" which I ignored
 # theres a section that you need to uncomment or the code won't compile and this populates the F90 varaible
 ## might need to pull a gist of the correctly formatted .modelErc file
+## all of this just makes sure the modelErc goes to the right spot
+RUN rm $HOME/.modelErc
+COPY prefilled_modelErc .modelErc
+RUN mv .modelErc $HOME/.modelErc
+RUN cat $HOME/.modelErc
 RUN make netcdf
 ## diagnostic tools now
 WORKDIR /opt/modelE2_planet_1.0/model/mk_diags
