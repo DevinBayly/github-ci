@@ -70,7 +70,7 @@ RUN make diags
 RUN cp diffreport prtostat write_2d_as_giss4d write_giss2d agcstat sumfiles scaleacc \
 prtolnst prtotj prtisccp prtrvr prtadiurn prtconsrv prtajl prtareg prtaj /usr/bin
 # needed for downloading the various files for running test
-RUN dnf install perl-File-Copy
+RUN dnf install -y perl-File-Copy
 ## cmp command missing without this
 RUN yum install -y diffutils
 # note that by now we are in the test run sections commands needed are 
@@ -79,4 +79,6 @@ RUN yum install -y diffutils
 ## ../exec/get_input_data -w E1oM20_Test $HOME/ModelE_Support/prod_input_files
 ## make clean; make -j setup RUN=E1oM20_Test
 # should perhaps put these in a file somewhere that gets copied in
-COPY test_run_ROCKE3D.sh $HOME/test_run_ROCKE3D
+COPY test_run_ROCKE3D.sh test_run_ROCKE3D.sh
+RUN mv test_run_ROCKE3D.sh $HOME/
+RUN bash $HOME/test_run_ROCKE3D.sh

@@ -1,5 +1,5 @@
 #!/bin/bash
-cd $HOME/modelE2_planet_1.0/decks
+cd /opt/modelE2_planet_1.0/decks
 # this will probably show an error about a folder missing, but then it creates it
 make rundeck RUNSRC=E1oM20 RUN=E1oM20_Test
 # this downloads a bunch of files
