@@ -1,0 +1,49 @@
+FROM ubuntu:latest
+
+RUN apt update
+RUN apt install -y wget
+RUN apt install -y libtool-bin meson ninja-build python-pip g++ git cmake xz-utils libx11-dev libxext-dev x11proto-core-dev x11proto-gl-dev libglew-dev freeglut3-dev bison flex libx11-xcb-dev pkg-config libxcb-randr0-dev
+RUN apt install -y python-is-python3
+RUN apt install -y python3-pip
+RUN python3 -m pip install lxml mako
+RUN wget "https://archive.mesa3d.org/mesa-21.3.7.tar.xz"
+RUN tar xf mesa-21.3.7.tar.xz
+RUN wget "https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.1/llvm-12.0.1.src.tar.xz"
+RUN apt install -y xz-utils
+RUN tar xf llvm-12.0.1.src.tar.xz
+RUN mkdir build
+WORKDIR build
+RUN mkdir -p /opt/openswr/
+RUN cmake -G "Unix Makefiles" \
+       -D CMAKE_BUILD_TYPE=Release \
+       -D LLVM_TARGETS_TO_BUILD=X86 \
+       -D BUILD_SHARED_LIBS=1 \
+       -D LLVM_ENABLE_RTTI=1 \
+       -D CMAKE_INSTALL_PREFIX=/opt/openswr/ \
+       ../llvm-12.0.1.src
+RUN make -j `nproc`
+RUN echo  "redo"
+RUN make install
+# ENV PATH=/opt/openswr/bin;$PATH
+# ENV LD_LIBRARY_PATH=/opt/openswr/lib:$LD_LIBRARY_PATH
+WORKDIR /mesa-21.3.7
+RUN mkdir build
+RUN ls /opt/openswr/bin
+RUN echo $PATH
+RUN echo $LD_LIBRARY_PATH
+# needed for build-dep
+RUN sed -i.bak 's/^# *deb-src/deb-src/g' /etc/apt/sources.list && \
+  apt-get update
+RUN apt build-dep -y mesa
+RUN export PATH=/opt/openswr/bin:$PATH;export LD_LIBRARY_PATH=/opt/openswr/lib; meson --buildtype=release \
+        -Dglx=gallium-xlib \
+        -Dvulkan-drivers= \
+        -Ddri-drivers= \
+        -Dosmesa=true \
+        -Dgallium-drivers=swrast,swr \
+        -Dplatforms=x11 \
+        -Dgallium-omx=disabled \
+        -Dprefix=/opt/openswr/ \
+        build
+RUN export PATH=/opt/openswr/bin:$PATH;export LD_LIBRARY_PATH=/opt/openswr/lib; ninja -C build
+RUN export PATH=/opt/openswr/bin:$PATH;export LD_LIBRARY_PATH=/opt/openswr/lib;meson install -C build
