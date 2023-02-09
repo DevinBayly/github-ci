@@ -1,0 +1,10 @@
+FROM selenium/standalone-chrome
+MAINTAINER Sebastian Saldarriaga <sebastian@ubidots.com>
+# based on https://github.com/ubidots/docker-selenium-screenshot
+
+# Install packages
+RUN sudo apt-get update && \
+    sudo apt-get install --no-install-recommends -y python3-pip apt-utils
+
+# Install selenium & pyvirtualdisplay
+RUN pip3 install selenium==3.141.0 pyvirtualdisplay
