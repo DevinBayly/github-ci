@@ -9,7 +9,7 @@ RUN tar xf vtk.tar
 WORKDIR VTK-9.1.0/
 RUN ls
 RUN mkdir build
-WORKDIR /VTK-9.1.0/build
+WORKDIR build/
 RUN cmake ../
 RUN make install -j $(nproc)
 RUN apt install -y xserver-xorg-video-dummy
