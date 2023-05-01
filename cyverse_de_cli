@@ -22,7 +22,7 @@ RUN apt install -y ros-melodic-slam-gmapping wget
 WORKDIR /
 RUN apt install ros-melodic-ros-core ros-melodic-pcl-ros \
      ros-melodic-tf2-geometry-msgs ros-melodic-rviz
-RUN apt install python-rosdep python-rosinstall python-rosinstall-generator python-wstool build-essential
+RUN apt install -y python-rosdep python-rosinstall python-rosinstall-generator python-wstool build-essential
 RUN rosdep init
 RUN rosdep update
 # Add sudo to user
