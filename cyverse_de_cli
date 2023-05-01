@@ -104,8 +104,9 @@ RUN type -p curl >/dev/null || (apt update && apt install curl -y) \
 # update terminal message
 RUN apt-get update && apt install neofetch figlet lolcat cowsay fortune w3m-img imagemagick -y
 ENV PATH=${PATH}:/usr/games
-COPY 01-custom /etc/motd
-RUN chmod +x /etc/motd
+# pretty sure we don't need this message of the day
+# COPY 01-custom /etc/motd
+# RUN chmod +x /etc/motd
 # using Tyson Swetnam's code from here https://github.com/cyverse-vice/cli/blob/main/bash/Dockerfile
 # ready to set user 
 USER user
