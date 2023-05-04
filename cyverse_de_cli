@@ -133,7 +133,7 @@ EXPOSE 7681
 WORKDIR /home/user
 
 # changes tmux layout while running
-COPY cyverse_entry.sh /bin
+COPY cyverse_entry.sh /bin/entry.sh
 RUN echo 'set-option -g status off' >> ~/.tmux.conf
 
 # add iRODS iCommands to user profile as JSON
