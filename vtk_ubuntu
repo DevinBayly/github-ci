@@ -10,3 +10,5 @@ WORKDIR /opt/VTK-9.2.6
 RUN  mkdir VTK-build
 WORKDIR  cd VTK-build
 RUN cmake ..
+RUN make -j$(nproc)
+RUN make install
