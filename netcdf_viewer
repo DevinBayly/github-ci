@@ -1,4 +1,4 @@
-FROM ghcr.io/devinbayly/vtk:latest
+FROM ghcr.io/devinbayly/vtk_ubuntu:latest
 ARG DEBIAN_FRONTEND=noninteractive
 
 
