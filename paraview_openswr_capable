@@ -1,0 +1,10 @@
+FROM ghcr.io/devinbayly/vtk_ubuntu:latest
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt update
+#modifications required to the ubuntu vtk container
+# install the qt5 stuff
+RUN apt install -y qtcreator qtbase5-dev qt5-qmake
+# the other issue that's super annoying is the missing lib tinfo. 
+RUN apt install -y libtinfo5 # this apparently is what satisfies paraview
+
+
