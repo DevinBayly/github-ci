@@ -14,4 +14,6 @@ RUN unzip surface.zip
 RUN chmod -R a+rwx /opt/
 # this is the biggest missing lib dependency
 RUN apt install -y libgtk2.0-dev
+# this will satisfy the opengl3 dependencies
+RUN apt install -y freeglut3-dev
 # should now be able to cd into that folder and run the ./surfice binary
