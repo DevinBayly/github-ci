@@ -1,0 +1,17 @@
+FROM ubuntu:latestARG 
+DEBIAN_FRONTEND=noninteractive
+
+RUN apt update
+RUN apt install -y wget curl
+# assumption here is that somewhere you've already clicked the "I accept" on their license for the download link
+RUN wget "https://www.nitrc.org/frs/download.php/12419/surfice_linux.zip//?i_agree=1&download_now=1" -O surface.zip
+RUN mv surface.zip /opt
+WORKDIR /opt
+
+RUN apt install unzip
+
+RUN unzip surface.zip
+RUN chmod -R a+rwx /opt/
+# this is the biggest missing lib dependency
+RUN apt install -y libgtk2.0-dev
+# should now be able to cd into that folder and run the ./surfice binary
