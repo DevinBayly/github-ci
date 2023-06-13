@@ -1,5 +1,5 @@
 FROM ubuntu:latestARG 
-DEBIAN_FRONTEND=noninteractive
+ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt update
 RUN apt install -y wget curl
