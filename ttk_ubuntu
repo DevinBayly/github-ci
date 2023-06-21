@@ -1,0 +1,12 @@
+FROM ghcr.io/devinbayly/vtk_ubuntu:latest
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt update
+RUN apt install -y wget
+WORKDIR /opt
+RUN wget "https://github.com/topology-tool-kit/ttk-paraview/releases/download/v5.10.1/ttk-paraview-v5.10.1-ubuntu-22.04.deb"
+RUN apt install -y ./ttk-paraview-v5.10.1-ubuntu-22.04.deb
+RUN wget "https://github.com/topology-tool-kit/ttk/releases/download/1.1.0/ttk-1.1.0-ubuntu-22.04.deb"
+RUN apt install -y ./ttk-1.1.0-ubuntu-22.04.deb
+RUN wget "https://github.com/topology-tool-kit/ttk-data/archive/1.1.0.tar.gz"
+RUN tar xf 1.1.0.tar.gz
+RUN chmod -R a+rwx /opt
