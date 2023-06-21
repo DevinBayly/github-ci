@@ -10,3 +10,4 @@ RUN apt install -y ./ttk-1.1.0-ubuntu-22.04.deb
 RUN wget "https://github.com/topology-tool-kit/ttk-data/archive/1.1.0.tar.gz"
 RUN tar xf 1.1.0.tar.gz
 RUN chmod -R a+rwx /opt
+RUN strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
