@@ -61,3 +61,4 @@ WORKDIR aloam_ws
 RUN git clone https://github.com/HKUST-Aerial-Robotics/A-LOAM.git
 WORKDIR ../
 RUN . /opt/ros/$ROS_DISTRO/setup.sh && catkin_make
+RUN chmod -R a+rxw /opt
