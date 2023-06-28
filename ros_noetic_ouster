@@ -12,7 +12,7 @@ RUN apt install -y         \
     libspdlog-dev           \
     libcurl4-openssl-dev    \
     cmake
-RUN source /opt/ros/$ROS_DISTRO/setup.bash
+RUN . /opt/ros/$ROS_DISTRO/setup.bash
 WORKDIR /opt
 # using instructions from page
 RUN git clone https://github.com/Krishtof-Korda/pcap-to-bag.git
