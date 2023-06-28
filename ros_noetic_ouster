@@ -1,5 +1,5 @@
 FROM ros:noetic-ros-base-focal
-
+ARG DEBIAN_FRONTEND=noninteractive
 RUN apt update
 RUN apt install -y libpcap-dev libtins-dev
 RUN apt install -y                     \
