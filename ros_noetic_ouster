@@ -12,19 +12,21 @@ RUN apt install -y         \
     libspdlog-dev           \
     libcurl4-openssl-dev    \
     cmake
-RUN . /opt/ros/$ROS_DISTRO/setup.bash
+RUN . /opt/ros/$ROS_DISTRO/setup.sh
 WORKDIR /opt
 # using instructions from page
+RUN apt install -y git
 RUN git clone https://github.com/Krishtof-Korda/pcap-to-bag.git
 RUN git clone https://github.com/ouster-lidar/ouster_example.git
 RUN mkdir -p myworkspace/src
 WORKDIR myworkspace
 RUN ln -s ../ouster_example ./src/
 RUN ln -s ../pcap-to-bag ./src/
-RUN catkin_make -DCMAKE_BUILD_TYPE=Release
+RUN . /opt/ros/$ROS_DISTRO/setup.sh && catkin_make -DCMAKE_BUILD_TYPE=Release
 WORKDIR /opt
 RUN mkdir -p ouster_ros_ws/src
 WORKDIR ouster_ros_ws/src
-RUN git clone https://github.com/ouster-lidar/ouster-ros.git
+RUN git clone --recurse-submodules https://github.com/ouster-lidar/ouster-ros.git
 WORKDIR ../
-RUN catkin_make --cmake-args -DCMAKE_BUILD_TYPE=Release
+RUN . /opt/ros/$ROS_DISTRO/setup.sh  && catkin_make --cmake-args -DCMAKE_BUILD_TYPE=Release
+
