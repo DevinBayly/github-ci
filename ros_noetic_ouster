@@ -57,8 +57,8 @@ RUN make test
 RUN make install
 WORKDIR /opt
 RUN mkdir -p aloam_ws/src
-WORKDIR aloam_ws 
+WORKDIR aloam_ws/src
 RUN git clone https://github.com/HKUST-Aerial-Robotics/A-LOAM.git
-WORKDIR ../../
+WORKDIR /opt/aloam_ws
 RUN . /opt/ros/$ROS_DISTRO/setup.sh && catkin_make
 RUN chmod -R a+rxw /opt
