@@ -51,6 +51,11 @@ WORKDIR ceres-bin
 RUN cmake ../ceres-solver-2.1.0
 RUN make -j3
 RUN make test
+RUN apt-get update \
+    && apt-get install -q -y openssh-client \
+    && apt-get install -q -y python3-pip \
+    && apt-get install -q -y ros-noetic-cv-bridge \
+    && apt-get install -q -y python3-opencv
 # Optionally install Ceres, it can also be exported using CMake which
 # allows Ceres to be used without requiring installation, see the documentation
 # for the EXPORT_BUILD_DIR option for more information.
