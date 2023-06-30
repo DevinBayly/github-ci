@@ -60,10 +60,23 @@ RUN apt-get update \
 # allows Ceres to be used without requiring installation, see the documentation
 # for the EXPORT_BUILD_DIR option for more information.
 RUN make install
+## install c++ 14
+RUN apt install -y gcc-10 g++-10
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 10
+
+RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 10
+RUN update-alternatives --set cc /usr/bin/gcc
+RUN update-alternatives --set c++ /usr/bin/g++
+RUN apt install -y libopencv-dev 
+
 WORKDIR /opt
 RUN mkdir -p aloam_ws/src
 WORKDIR aloam_ws/src
-RUN git clone https://github.com/HKUST-Aerial-Robotics/A-LOAM.git
+##
+RUN echo cloning
+RUN git clone https://github.com/DevinBayly/A-LOAM.git
+
 WORKDIR /opt/aloam_ws
-RUN . /opt/ros/$ROS_DISTRO/setup.sh && catkin_make
+RUN . /opt/ros/$ROS_DISTRO/setup.sh && catkin_make -DCMAKE_CXX_STANDARD=14
 RUN chmod -R a+rxw /opt
+
