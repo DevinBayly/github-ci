@@ -18,17 +18,21 @@ WORKDIR /opt
 RUN apt install -y git
 RUN git clone https://github.com/Krishtof-Korda/pcap-to-bag.git
 RUN git clone https://github.com/ouster-lidar/ouster_example.git
-RUN mkdir -p myworkspace/src
-WORKDIR myworkspace
-RUN ln -s ../ouster_example ./src/
-RUN ln -s ../pcap-to-bag ./src/
-RUN . /opt/ros/$ROS_DISTRO/setup.sh && catkin_make -DCMAKE_BUILD_TYPE=Release
-WORKDIR /opt
 RUN mkdir -p ouster_ros_ws/src
 WORKDIR ouster_ros_ws/src
 RUN git clone --recurse-submodules https://github.com/ouster-lidar/ouster-ros.git
 WORKDIR ../
 RUN . /opt/ros/$ROS_DISTRO/setup.sh  && catkin_make --cmake-args -DCMAKE_BUILD_TYPE=Release
+WORKDIR /opt
+RUN mkdir -p myworkspace/src
+WORKDIR myworkspace
+WORKDIR src
+RUN ln -s /opt/ouster_example 
+RUN ln -s /opt/ouster_ros_ws 
+RUN ln -s /opt/pcap-to-bag 
+WORKDIR ../
+RUN . /opt/ros/$ROS_DISTRO/setup.sh && catkin_make -DCMAKE_BUILD_TYPE=Release
+WORKDIR /opt
 ## trying to make everything in same container
 # inmstall the pcl libraries
 RUN apt install libpcl-dev
