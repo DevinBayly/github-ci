@@ -18,6 +18,10 @@ WORKDIR /opt
 # using instructions from page
 RUN apt install -y git
 RUN git clone https://github.com/Krishtof-Korda/pcap-to-bag.git
+WORKDIR pcap-to-bag
+# last commit where things worked
+RUN git checkout 348371e32a5f5d0d85696d04b1af11d4bdc86783
+WORKDIR /opt
 RUN wget "https://github.com/ouster-lidar/ouster_example/archive/refs/tags/20210608.tar.gz"
 RUN tar xf 20210608.tar.gz
 RUN mv ouster_example-20210608 ouster_example
@@ -31,7 +35,6 @@ RUN mkdir -p myworkspace/src
 WORKDIR myworkspace
 WORKDIR src
 RUN ln -s /opt/ouster_example 
-RUN ln -s /opt/ouster_ros_ws 
 RUN ln -s /opt/pcap-to-bag 
 WORKDIR ../
 RUN . /opt/ros/$ROS_DISTRO/setup.sh && catkin_make -DCMAKE_BUILD_TYPE=Release
