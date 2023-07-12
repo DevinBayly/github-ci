@@ -7,3 +7,4 @@ RUN apt install -y python3-pip
 RUN apt install -y freeglut3-dev
 RUN apt install -y libxrender-dev
 RUN pip install fury
+RUN pip install xvfbwrapper
