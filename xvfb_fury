@@ -1,0 +1,9 @@
+FROM ubuntu:latest
+
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt update
+RUN apt install -y xvfb
+RUN apt install -y python3-pip
+RUN apt install freeglut3-dev
+RUN apt install libxrender-dev
+RUN pip install fury
