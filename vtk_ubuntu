@@ -8,7 +8,7 @@ RUN wget "https://www.vtk.org/files/release/9.2/VTK-9.2.6.tar.gz"
 RUN  tar -zxvf VTK-9.2.6.tar.gz -C /opt
 WORKDIR /opt/VTK-9.2.6
 RUN  mkdir VTK-build
-WORKDIR  cd VTK-build
+WORKDIR VTK-build
 RUN cmake ..
 RUN make -j$(nproc)
 RUN make install
