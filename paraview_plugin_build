@@ -2,16 +2,20 @@ FROM ghcr.io/devinbayly/vtk_ubuntu:latest
 RUN apt update
 ARG DEBIAN_FRONTEND=noninteractive
 WORKDIR /opt
+## general install needs
 RUN apt-get install -y git cmake build-essential libgl1-mesa-dev libxt-dev python3-dev python3-numpy libopenmpi-dev libtbb-dev ninja-build
+## getting cgal
+RUN apt-get install -y libcgal-dev
+## paraview stuff underneath here
 RUN apt install -y qtcreator qtbase5-dev qt5-qmake
 RUN apt install -y libqt5help5
 RUN apt install -y libqt5x11extras5-dev libqt5help5 qttools5-dev qtxmlpatterns5-dev-tools libqt5svg5-dev
 RUN git clone --recursive https://gitlab.kitware.com/paraview/paraview.git
 RUN mkdir paraview_build
 WORKDIR paraview_build
-RUN alias ninja=ninja-build \
+RUN alias ninja=ninja-build \ 
         && export PATH=$PATH:/usr/lib64/openmpi/bin/ \
         && cmake -GNinja -DPARAVIEW_USE_PYTHON=ON -DPARAVIEW_BUILD_ALL_MODULES=ON -DPARAVIEW_USE_MPI=ON -DVTK_SMP_IMPLEMENTATION_TYPE=TBB -DCMAKE_BUILD_TYPE=Release ../paraview \
         && ninja
 
-RUN strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5                                               
+RUN strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
