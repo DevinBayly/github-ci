@@ -13,6 +13,7 @@ WORKDIR /opt/VTK-9.2.6
 RUN  mkdir VTK-build
 WORKDIR VTK-build
 ## unsure what settings are needed to pick up the qt5 stuff for vtk
-RUN cmake ..
+#https://discourse.vtk.org/t/could-not-find-the-vtk-package-with-the-following-required-components-guisupportqt-viewsqt/8252
+RUN cmake .. -DVTK_MODULE_ENABLE_VTK_GuiSupportQt=YES -DVTK_MODULE_ENABLE_VTK_ViewsQt=YES
 RUN make -j$(nproc)
 RUN make install
