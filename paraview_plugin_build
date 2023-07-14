@@ -17,5 +17,5 @@ RUN alias ninja=ninja-build \
         && export PATH=$PATH:/usr/lib64/openmpi/bin/ \
         && cmake -GNinja -DPARAVIEW_USE_PYTHON=ON -DPARAVIEW_BUILD_ALL_MODULES=ON -DPARAVIEW_USE_MPI=ON -DVTK_SMP_IMPLEMENTATION_TYPE=TBB -DCMAKE_BUILD_TYPE=Release ../paraview \
         && ninja
-
+RUN make install
 RUN strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
