@@ -83,7 +83,7 @@ RUN mkdir -p aloam_ws/src
 WORKDIR aloam_ws/src
 ##
 RUN echo cloning
-RUN git clone --branch ouster_aloam https://github.com/DevinBayly/ouster_aloam.git
+RUN git clone --branch ouster_aloam https://github.com/DevinBayly/ouster-aloam.git
 
 WORKDIR /opt/aloam_ws
 RUN . /opt/ros/$ROS_DISTRO/setup.sh && catkin_make -DCMAKE_CXX_STANDARD=14
