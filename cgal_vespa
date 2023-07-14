@@ -11,6 +11,7 @@ WORKDIR build
 RUN cmake ..                                                                          # configure CGAL
 RUN make install                                                                      # install CGAL
 ## getting vespa
+WORKDIR /opt
 RUN git clone https://gitlab.kitware.com/vtk-cgal/vespa.git
 WORKDIR vespa
 RUN mkdir vespa_build
