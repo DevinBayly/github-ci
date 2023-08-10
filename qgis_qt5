@@ -1,2 +1,3 @@
 FROM ghcr.io/devinbayly/qgis:test
+RUN apt install -y binutils
 RUN strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
