@@ -12,7 +12,7 @@ WORKDIR /CloudCompare/build
 RUN apt install -y cmake
 RUN apt install -y pdal libpdal-dev libpdal-plugins
 ## ensure laz support provided
-RUN cmake -DPLUGIN_IO_QPDAL=ON ..
+RUN cmake -DPLUGIN_IO_QPDAL=ON -DPLUGIN_STANDARD_QCSF=ON -DPLUGIN_STANDARD_QCANUPO=ON ..
 RUN cmake --build .
 RUN cmake --install .
 RUN strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
