@@ -10,6 +10,7 @@ WORKDIR CloudCompare
 RUN mkdir build 
 WORKDIR /CloudCompare/build
 RUN apt install -y cmake
-RUN cmake ..
+## ensure laz support provided
+RUN cmake -DPLUGIN_IO_QPDAL=ON ..
 RUN cmake --build .
 RUN cmake --install .
