@@ -14,3 +14,4 @@ RUN apt install -y cmake
 RUN cmake -DPLUGIN_IO_QPDAL=ON ..
 RUN cmake --build .
 RUN cmake --install .
+RUN strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
