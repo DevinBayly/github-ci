@@ -1,0 +1,2 @@
+FROM ghcr.io/devinbayly/cloud_compare
+echo "allowed_users = anybody" > /etc/X11/Xwrapper.config
