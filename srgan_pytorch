@@ -1,0 +1,7 @@
+FROM docker://pytorch/pytorch
+
+RUN apt update
+RUN apt install -y git
+RUN git clone https://github.com/Lornatang/SRGAN-PyTorch.git
+WORKDIR SRGAN-PyTorch
+RUN pip install -r requirements.txt
