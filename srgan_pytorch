@@ -5,3 +5,4 @@ RUN apt install -y git
 RUN git clone https://github.com/Lornatang/SRGAN-PyTorch.git
 WORKDIR SRGAN-PyTorch
 RUN pip install -r requirements.txt
+RUN apt install -y gcc freeglut3-dev libglib2.0-0
