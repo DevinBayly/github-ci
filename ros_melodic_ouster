@@ -1,4 +1,4 @@
-FROM ros:melodic-ros-base-bionic
+FROM docker://ros:melodic-ros-base-bionic
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt update
 RUN apt install -y libpcap-dev libtins-dev
@@ -63,19 +63,13 @@ RUN make test
 RUN apt-get update \
     && apt-get install -q -y openssh-client \
     && apt-get install -q -y python3-pip \
-    && apt-get install -q -y ros-noetic-cv-bridge \
+    && apt-get install -q -y ros-melodic-cv-bridge \
     && apt-get install -q -y python3-opencv
 # Optionally install Ceres, it can also be exported using CMake which
 # allows Ceres to be used without requiring installation, see the documentation
 # for the EXPORT_BUILD_DIR option for more information.
 RUN make install
 ## install c++ 14
-RUN apt install -y gcc-10 g++-10
-RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 10
-
-RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 10
-RUN update-alternatives --set cc /usr/bin/gcc
-RUN update-alternatives --set c++ /usr/bin/g++
 RUN apt install -y libopencv-dev python3-opencv
 
 WORKDIR /opt
@@ -87,4 +81,3 @@ RUN git clone --branch ouster_aloam https://github.com/DevinBayly/ouster-aloam.g
 WORKDIR /opt/aloam_ws
 RUN . /opt/ros/$ROS_DISTRO/setup.sh && catkin_make -DCMAKE_CXX_STANDARD=14
 RUN chmod -R a+rxw /opt
-
