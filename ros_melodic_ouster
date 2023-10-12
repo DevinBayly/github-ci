@@ -1,4 +1,4 @@
-FROM docker://ros:melodic-ros-base-bionic
+FROM ros:melodic-ros-base-bionic
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt update
 RUN apt install -y libpcap-dev libtins-dev
