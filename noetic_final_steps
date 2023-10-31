@@ -1,0 +1,12 @@
+FROM ghcr.io/devinbayly/ros_noetic_ouster
+# get the catkin_ws from online
+WORKDIR /opt/
+RUN mkdir -p point_aligner/src
+WORKDIR point_aligner/src
+RUN git clone https://github.com/DevinBayly/ouster_colored_point_aligner.git
+RUN ls
+RUN pwd
+WORKDIR ../
+RUN . /opt/ros/$ROS_DISTRO/setup.sh  && catkin_make --cmake-args -DCMAKE_BUILD_TYPE=Release
+RUN pip install numpy
+RUN pip install usd-core
