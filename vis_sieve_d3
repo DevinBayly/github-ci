@@ -3,5 +3,6 @@ FROM continuumio/miniconda3
 
 RUN apt update
 RUN apt install -y npm
+RUN npm install -g reload
 RUN pip install fastapi uvicorn[standard]
 RUN pip install streamlit
