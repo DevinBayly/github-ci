@@ -2,5 +2,5 @@ FROM continuumio/miniconda3
 
 
 RUN apt update
-RUN apt install npm
+RUN apt install -y npm
 RUN pip install fastapi uvicorn[standard]
