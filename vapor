@@ -1,0 +1,17 @@
+FROM ubuntu:22.04
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt update
+RUN apt install -y wget
+
+RUN apt-get install -y cmake pkg-config
+RUN apt-get install -y mesa-utils libglu1-mesa-dev freeglut3-dev mesa-common-dev
+RUN apt-get install -y libglew-dev libglfw3-dev libglm-dev
+RUN apt-get install -y libao-dev libmpg123-dev
+RUN apt install -y qtcreator qtbase5-dev qt5-qmake cmake
+
+RUN strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
+RUN wget "https://github.com/NCAR/VAPOR/releases/download/v3.9.1/VAPOR3-3.9.1-Ubuntu22.sh" -O vapor.sh
+RUN mv vapor.sh /opt
+WORKDIR /opt
+RUN apt install -y build-essential cmake
+RUN bash ./vapor.sh --skip-license --include-subdir
