@@ -12,5 +12,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
+RUN apt-get install -y mesa-utils libgl1-mesa-glx
+
 RUN pip install kiss-icp==0.2.10
 RUN pip install ouster-sdk
