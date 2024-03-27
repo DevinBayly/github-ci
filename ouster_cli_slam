@@ -1,0 +1,5 @@
+FROM continuumio/miniconda3
+RUN apt update
+# currently they have a problem and we need to use older kiss icp
+RUN pip install kiss-icp==0.2.10
+RUN pip install ouster-sdk
