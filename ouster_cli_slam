@@ -1,5 +1,16 @@
 FROM continuumio/miniconda3
 RUN apt update
 # currently they have a problem and we need to use older kiss icp
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+
+# Install Open3D system dependencies and pip
+RUN apt-get update && apt-get install --no-install-recommends -y \
+    libgl1 \
+    libgomp1 \
+    python3-pip \
+    && rm -rf /var/lib/apt/lists/*
+
 RUN pip install kiss-icp==0.2.10
 RUN pip install ouster-sdk
