@@ -1,4 +1,4 @@
-FROM ros:noetic-ros-base-focal
+FROM continuumio/miniconda3
 ARG DEBIAN_FRONTEND=noninteractive
 # switch up to use the build for ouster-sdk
 
