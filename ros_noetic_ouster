@@ -6,6 +6,6 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 RUN pip install kiss-icp==0.2.10
 RUN pip install ouster-sdk
-
+RUN pip install usd-core
 RUN pip show ouster-mapping
 COPY ouster_cli_mapping.py /opt/conda/lib/python3.11/site-packages/ouster/cli/plugins/cli_mapping.py
