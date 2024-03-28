@@ -1,8 +1,6 @@
-FROM continuumio/miniconda3
+FROM ghcr.io/devinbayly/open3d
 ARG DEBIAN_FRONTEND=noninteractive
 # switch up to use the build for ouster-sdk
-
-ARG DEBIAN_FRONTEND=noninteractive
 
 
 
