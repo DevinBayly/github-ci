@@ -470,7 +470,9 @@ def point_cloud_convert(input_file: str, output_file: str, min_dist: float,
         print("scan number",scan_idx)
         output_pcd = o3d.t.geometry.PointCloud()
         output_pcd.point.positions = o3d.core.Tensor(filtered_points)
-        save_file(f"{scan_idx:04d}", ".pcd", output_pcd)
+        output_pcd.point[field] = filtered_keys
+        o3d.t.io.write_point_cloud(f"{scan_idx:04d}",output_pcd)
+        #save_file(f"{scan_idx:04d}", ".pcd", output_pcd)
         
         print("skipping downsampling")    
        # points_for_downsample = np.append(points_for_downsample, filtered_points,
