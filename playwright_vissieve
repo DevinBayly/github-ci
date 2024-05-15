@@ -7,4 +7,5 @@ RUN playwright install-deps
 RUN playwright install
 
 RUN pip install pytest-playwright playwright -U
-RUN pip install duckdb
+RUN pip install duckdb tqdm 
+RUN apt install -y pdfimages
