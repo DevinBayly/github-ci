@@ -7,3 +7,4 @@ RUN playwright install-deps
 RUN playwright install
 
 RUN pip install pytest-playwright playwright -U
+RUN pip install duckdb
