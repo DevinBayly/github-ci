@@ -1,0 +1,6 @@
+from ubuntu:latest
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt update
+RUN apt install -y wget git cpio python3 xz-utils
+RUN apt install -y qt6-base-dev
