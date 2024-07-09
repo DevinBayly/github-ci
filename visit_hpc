@@ -9,6 +9,6 @@ RUN apt install -y qt6-base-dev
 RUN wget "https://github.com/visit-dav/visit/releases/download/v3.4.1/visit-install3_4_1"
 RUN wget "https://github.com/visit-dav/visit/releases/download/v3.4.1/visit3_4_1.linux-x86_64-debian10.tar.gz"
 RUN chmod +x visit-install3_4_1
-RUN ./visit-install3_4_1 3.4.1 linux-x86_64-debian10 /usr/local/visit
+RUN ./visit-install3_4_1 3.4.1 linux-x86_64-debian10 /usr/local/visit -c none
 # update the path so that we can just run visit 
 ENV PATH=/usr/local/visit/bin/
