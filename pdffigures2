@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 
 RUN apt update
-RUN apt install -y curl git zip unzip
+RUN apt install -y curl git zip unzip libxrender1 libxtst6 libxi6
 RUN curl -s "https://get.sdkman.io" | bash
 
 # this SHELL command is needed to allow using source
