@@ -12,5 +12,6 @@ RUN pip install ouster-sdk
 RUN pip install open3d
 RUN pip install usd-core
 
+
 # force rebuild, getting latest materiala from cli mapping file
 #COPY ouster_cli_mapping.py /opt/conda/lib/python3.11/site-packages/ouster/cli/plugins/cli_mapping.py
