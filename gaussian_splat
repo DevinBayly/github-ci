@@ -1,0 +1,13 @@
+FROM nvcr.io/nvidia/pytorch:22.07-py3
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt update 
+RUN apt install -y libglew-dev libassimp-dev libboost-all-dev libgtk-3-dev libopencv-dev libglfw3-dev libavdevice-dev libavcodec-dev libeigen3-dev libxxf86vm-dev libembree-dev
+RUN wget "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh"
+# the -b is for batch mode
+RUN bash Miniforge3-Linux-x86_64.sh -b
+# get the gaussian splat repo
+RUN git clone https://github.com/graphdeco-inria/gaussian-splatting --recursive
+WORKDIR gaussian-splatting
+# try to use the mamba program before we have the environment setup
+RUN /root/miniforge3/bin/mamba env create --file environment.yml
+# at the end of this we will need to be able to activate the environment as a normal user so
