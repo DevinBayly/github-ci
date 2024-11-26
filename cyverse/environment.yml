@@ -1,0 +1,22 @@
+name: geospatial
+channels:
+  - conda-forge
+dependencies:
+  - altair
+  - bokeh
+  - cmake
+  - eigen
+  - gdal
+  - geojson
+  - geopandas
+  - laszip
+  - libxml2
+  - matplotlib
+  - numpy
+  - pandas
+  - pdal
+  - python-pdal
+  - pip
+  - python==3.10.*
+  - scipy
+  - seaborn

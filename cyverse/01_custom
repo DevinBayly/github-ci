@@ -1,0 +1,18 @@
+#!/bin/bash
+MSG="CyVerse VICE"
+figlet $MSG | lolcat;
+echo
+neofetch
+echo
+echo "Welcome to Cloud Shell."
+echo 
+echo "Your CyVerse Username is:" $IPLANT_USER
+echo
+echo "To transfer files to or from the Data Store use GoCommands, type 'gocmd help' for options"
+echo
+echo "Your personal folders and Community Released folders are also mounted to the directory '/data-store/'" 
+echo
+echo "Want to know more? Learning Center Documentation: https://learning.cyverse.org"
+echo 
+echo "About this Tool & App: https://github.com/cyverse-vice/cli"
+echo
