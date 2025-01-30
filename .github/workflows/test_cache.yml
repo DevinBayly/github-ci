@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGENAME: test_cache
+  IMAGE_NAME: test_cache
 
 jobs:
   changes:
