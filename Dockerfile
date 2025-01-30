@@ -8,3 +8,4 @@ RUN apt update
 # RUN apt-get install -y  libopenmpi-dev
 RUN apt install -y build-essential
 RUN echo DONE DONE Done again
+RUN echo new line
