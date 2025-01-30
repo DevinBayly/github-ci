@@ -24,7 +24,7 @@ jobs:
   build:
     needs:
       - changes
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     permissions:
       contents: read
       packages: write
