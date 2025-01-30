@@ -7,9 +7,9 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     libgl1 \
     libgomp1 \
     python3-pip \
+    pipx \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Open3D from the PyPI repositories
-RUN python3 -m pip install --no-cache-dir --upgrade pip && \
-    python3 -m pip install --no-cache-dir --upgrade open3d
-RUN python3 -m pip install jupyter
+RUN pipx install open3d
+RUN pipx jupyter
