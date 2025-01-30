@@ -38,7 +38,7 @@ libqt5opengl5-dev \
 libcgal-dev \
 cudss
 # insert purpose error here to test caching
-RUN apt-get install  cmakes
+RUN apt-get install  cmake
 RUN apt-get install -y libgoogle-glog-dev libgflags-dev
 RUN apt-get install -y libatlas-base-dev
 RUN apt-get install -y libeigen3-dev
