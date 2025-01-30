@@ -24,7 +24,7 @@ jobs:
             files: |
               **/*
             ignore: |
-              **/.github/workflows/*
+              **/*.yml
     
   build:
     needs:
@@ -59,8 +59,8 @@ jobs:
           BUILDKIT_PROGRESS: plain
         with:
           context: .
-          file: ./Dockerfile
-          tags: ${{ env.REGISTRY }}/devinbayly/${{ env.IMAGE_NAME }}:latest
+          file: ./${{matrix.changed_file}}
+          tags: ${{ env.REGISTRY }}/devinbayly/${{ matrix.changed_file }}:latest
           cache-from: type=registry,ref=${{ env.REGISTRY }}/devinbayly/github-ci:buildcache
           cache-to: type=registry,ref=${{ env.REGISTRY }}/devinbayly/github-ci:buildcache,mode=max
           push: true
