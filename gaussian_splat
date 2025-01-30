@@ -1,13 +1,78 @@
-FROM nvcr.io/nvidia/pytorch:22.07-py3
+FROM nvidia/cuda:12.4.1-devel-ubuntu22.04 
+
+ARG UBUNTU_VERSION=22.04
+ARG NVIDIA_CUDA_VERSION=12.4.1
+
+#
+# Docker builder stage.
+#
+
+ARG COLMAP_GIT_COMMIT=main
+ARG CUDA_ARCHITECTURES=60
+ARG QT_XCB_GL_INTEGRATION=xcb_egl
+
+# Prevent stop building ubuntu at time zone selection.
 ARG DEBIAN_FRONTEND=noninteractive
-RUN apt update 
-RUN apt install -y libglew-dev libassimp-dev libboost-all-dev libgtk-3-dev libopencv-dev libglfw3-dev libavdevice-dev libavcodec-dev libeigen3-dev libxxf86vm-dev libembree-dev
-RUN wget "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh"
-# the -b is for batch mode
-RUN bash Miniforge3-Linux-x86_64.sh -b
-# get the gaussian splat repo
-RUN git clone https://github.com/graphdeco-inria/gaussian-splatting --recursive
-WORKDIR gaussian-splatting
-# try to use the mamba program before we have the environment setup
-RUN /root/miniforge3/bin/mamba env create --file environment.yml
-# at the end of this we will need to be able to activate the environment as a normal user so
+
+# Prepare and empty machine for building.
+RUN apt-get update && \
+apt-get install -y --no-install-recommends --no-install-suggests \
+git \
+cmake \
+ninja-build \
+build-essential \
+libboost-program-options-dev \
+libboost-graph-dev \
+libboost-system-dev \
+libeigen3-dev \
+libflann-dev \
+libfreeimage-dev \
+libmetis-dev \
+libgoogle-glog-dev \
+libgtest-dev \
+libgmock-dev \
+libsqlite3-dev \
+libglew-dev \
+qtbase5-dev \
+libqt5opengl5-dev \
+libcgal-dev \
+cudss
+# insert purpose error here to test caching
+RUN apt-get install  cmake
+RUN apt-get install -y libgoogle-glog-dev libgflags-dev
+RUN apt-get install -y libatlas-base-dev
+RUN apt-get install -y libeigen3-dev
+RUN apt-get install -y libsuitesparse-dev
+
+RUN apt-get install -y  gcc-10 g++-10
+ARG CC=/usr/bin/gcc-10
+ARG CXX=/usr/bin/g++-10
+ARG CUDAHOSTCXX=/usr/bin/g++-10
+RUN ln -s /usr/lib/x86_64-linux-gnu/./libcudss.so /usr/lib/x86_64-linux-gnu/./libcudss.so.0.3.0
+RUN ln -s /usr/lib/x86_64-linux-gnu/./libcudss_commlayer_openmpi.so /usr/lib/x86_64-linux-gnu/./libcudss_commlayer_openmpi.so.0.3.0
+RUN ln -s /usr/lib/x86_64-linux-gnu/./libcudss_commlayer_nccl.so /usr/lib/x86_64-linux-gnu/./libcudss_commlayer_nccl.so.0.3.0
+#RUN ln -s /usr/lib/x86_64-linux-gnu/./libcudss_commlayer_openmpi.so /usr/lib/x86_64-linux-gnu/./libcudss_commlayer_openmpi.so.0.3.0
+
+
+#build and install ceres
+RUN git clone https://ceres-solver.googlesource.com/ceres-solver --recurse-submodules
+RUN sed -i 's/\${cudss_VERSION}//g' ceres-solver/CMakeLists.txt && cd ceres-solver && \
+  mkdir build && \
+  cd build && \
+  cmake .. -DBUILD_TESTING=OFF -DBUILD_EXAMPLES=ON -DCMAKE_CUDA_ARCHITECTURES=${CUDA_ARCHITECTURES} && \
+  make -j && make install
+
+
+
+# Build and install COLMAP.
+
+RUN git clone  --recurse-submodules https://github.com/colmap/colmap.git && cd colmap && \
+  git fetch https://github.com/colmap/colmap.git ${COLMAP_GIT_COMMIT} && \
+  git checkout FETCH_HEAD && \
+  mkdir build && \
+  cd build && \
+  cmake .. -DCMAKE_CUDA_ARCHITECTURES=${CUDA_ARCHITECTURES} \
+  -DCMAKE_INSTALL_PREFIX=/usr/local && \
+  make -j && make install
+
+RUN strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
