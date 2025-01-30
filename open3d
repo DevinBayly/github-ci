@@ -12,4 +12,4 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 
 # Install Open3D from the PyPI repositories
 RUN pipx install open3d
-RUN pipx install jupyter
+RUN pip install jupyter
