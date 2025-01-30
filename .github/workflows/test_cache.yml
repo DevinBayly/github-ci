@@ -61,7 +61,7 @@ jobs:
           context: .
           file: ./Dockerfile
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ github.repository }}:buildcache
-          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ github.repository }}:buildcache,mode=max
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/devinbayly/github-ci:buildcache
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/devinbayly/github-ci:buildcache,mode=max
           push: true
           log-level: debug
