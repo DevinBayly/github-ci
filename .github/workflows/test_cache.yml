@@ -56,4 +56,4 @@ jobs:
           tags: ${{ env.REGISTRY }}/${{matrix.changed_file }}:latest
           cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ matrix.changed_file }}:buildcache
           cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ matrix.changed_file }}:buildcache,mode=max
-          push: false
+          push: true
