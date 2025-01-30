@@ -7,3 +7,4 @@ RUN apt update
 # RUN apt-get install -y  libnetcdff-dev
 # RUN apt-get install -y  libopenmpi-dev
 RUN apt install -y build-essential
+RUN echo DONE
