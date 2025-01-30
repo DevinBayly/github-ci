@@ -1,52 +1,59 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
-# GitHub recommends pinning actions to a commit SHA.
-# To get a newer version, you will need to update the SHA.
-# You can also reference a tag or branch, but the action may change without warning.
-
-name: experiment
+name: Docker Build with Layer Caching
 
 on:
   push:
-    branches: ['test']
+    branches: [ main ]
+  workflow_dispatch:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: vtk_xorg_dummy
 
 jobs:
-  build-and-push-image:
+  changes:
+      name: "Changed Singularity Recipes"
+      runs-on: self-hosted
+      # runs-on: ubuntu-latest
+      outputs:
+        changed_file: ${{ steps.files.outputs.added_modified }}
+      steps:
+        - id: files
+          uses: jitterbit/get-changed-files@b17fbb00bdc0c0f63fcf166580804b4d2cdc2a42
+          with:
+            format: 'json'
+    
+  build:
+    needs:
+      - changes
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
-
+    strategy:
+      # Keep going on other deployments if anything bloops
+      fail-fast: false
+      matrix:
+        changed_file: ${{ fromJSON(needs.changes.outputs.changed_file) }}
+    name: Check ${{matrix.changed_file}}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Log in to the Container registry
-        uses: docker/login-action@v2
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
         with:
-          registry: ghcr.io
+          registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v4
-        with:
-          images: ${{ env.REGISTRY }}/${{github.actor}}/${{ env.IMAGE_NAME }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v3
+      - name: Build and cache Docker image
+        uses: docker/build-push-action@v5
         with:
           context: .
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=registry,ref=${{ steps.meta.outputs.tags }}
-          cache-to: type=inline
+          file: ${{matrix.changed_file}}
+          tags: ${{ env.REGISTRY }}/${{matrix.changed_file }}:latest
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ matrix.changed_file }}:buildcache
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ matrix.changed_file }}:buildcache,mode=max
+          push: false
