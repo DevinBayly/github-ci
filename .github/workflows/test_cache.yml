@@ -56,8 +56,8 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: ${{matrix.changed_file}}
-          tags: ${{ env.REGISTRY }}/devinbayly/${{matrix.changed_file }}:latest
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/devinbayly/${{ matrix.changed_file }}:buildcache
-          cache-to: type=registry,ref=${{ env.REGISTRY }}/devinbayly/${{ matrix.changed_file }}:buildcache,mode=max
+          file: ./${{matrix.changed_file}}
+          tags: ${{ env.REGISTRY }}/github-ci:latest
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/github-ci:buildcache
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/github-ci:buildcache,mode=max
           push: true
