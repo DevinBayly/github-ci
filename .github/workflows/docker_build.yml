@@ -13,7 +13,8 @@ on:
 jobs:
   changes:
     name: "Changed Singularity Recipes"
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
+    # runs-on: ubuntu-latest
     outputs:
       changed_file: ${{ steps.files.outputs.added_modified }}
     steps:
@@ -25,7 +26,8 @@ jobs:
   build-test-containers:
     needs:
       - changes
-    runs-on: ubuntu-latest
+    #runs-on: ubuntu-latest
+    runs-on: self-hosted
     strategy:
       # Keep going on other deployments if anything bloops
       fail-fast: false
