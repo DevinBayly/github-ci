@@ -62,6 +62,6 @@ jobs:
           file: ./nvtop
           tags: ghcr.io/devinbayly/nvtop:latest
           push: true
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=registry,ref=ghcr.io/devinbayly/nvtop:buildcache
+          cache-to: type=registry,ref=ghcr.io/devinbayly/nvtop:buildcachemode=max
           
