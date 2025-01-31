@@ -59,9 +59,9 @@ jobs:
           BUILDKIT_PROGRESS: plain
         with:
           context: .
-          file: ./nvtop
-          tags: ghcr.io/devinbayly/nvtop:latest
+          file: ./gaussian_splat
+          tags: ghcr.io/devinbayly/gaussian_splat:latest
           push: true
-          cache-from: type=registry,ref=ghcr.io/devinbayly/nvtop:buildcache
-          cache-to: type=registry,ref=ghcr.io/devinbayly/nvtop:buildcache,mode=max
+          cache-from: type=registry,ref=ghcr.io/devinbayly/gaussian_splat:latest
+          cache-to: type=registry,ref=ghcr.io/devinbayly/gaussian_splat:buildcache,mode=max
           
