@@ -76,5 +76,8 @@ RUN git clone  --recurse-submodules https://github.com/colmap/colmap.git && cd c
   make -j && make install
 
 RUN strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
-RUN echo test cache
-RUN echo extra test line
+
+
+## set up the micromamba stuff
+RUN "${SHELL}" <(curl -L micro.mamba.pm/install.sh)
+RUN micromamba
