@@ -82,5 +82,5 @@ RUN strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so
 RUN apt install -y curl
 RUN curl -L micro.mamba.pm/install.sh > install.sh
 RUN ls
-RUN install.sh
+RUN sh install.sh
 RUN micromamba
