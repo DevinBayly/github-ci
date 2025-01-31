@@ -80,10 +80,7 @@ RUN strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so
 
 ## set up the micromamba stuff
 RUN apt install -y curl
-RUN curl -L micro.mamba.pm/install.sh > install.sh
-RUN ls
-ENV SHELL /bin/bash
-RUN bash install.sh
-ENV export MAMBA_ROOT_PREFIX=/root  # optional, defaults to ~/micromamba
-RUN eval "$(micromamba shell hook -s posix)"
-RUN micromamba
+RUN curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
+ENV MAMBA_ROOT_PREFIX=/root # optional, defaults to ~/micromamba
+eval "$(./bin/micromamba shell hook -s posix)"
+
