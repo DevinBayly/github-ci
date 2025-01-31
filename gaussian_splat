@@ -83,4 +83,4 @@ RUN apt install -y curl
 RUN curl -L micro.mamba.pm/install.sh > install.sh
 RUN ls
 ENV SHELL /bin/bash
-RUN "${SHELL}" <(curl -L micro.mamba.pm/install.sh)
+RUN bash install.sh
