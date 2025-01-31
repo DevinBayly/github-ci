@@ -59,9 +59,9 @@ jobs:
           BUILDKIT_PROGRESS: plain
         with:
           context: .
-          file: ./gaussian_splat
-          tags: ghcr.io/devinbayly/gaussian_splat:latest
+          file: ./${{matrix.changed_file}}
+          tags: ghcr.io/devinbayly/${{matrix.changed_file}}:latest
           push: true
-          cache-from: type=registry,ref=ghcr.io/devinbayly/gaussian_splat:buildcache
-          cache-to: type=registry,ref=ghcr.io/devinbayly/gaussian_splat:buildcache,mode=max
+          cache-from: type=registry,ref=ghcr.io/devinbayly/${{matrix.changed_file}}:buildcache
+          cache-to: type=registry,ref=ghcr.io/devinbayly/${{matrix.changed_file}}:buildcache,mode=max
           
