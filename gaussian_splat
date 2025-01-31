@@ -82,5 +82,5 @@ RUN strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so
 RUN apt install -y curl
 RUN curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
 ENV MAMBA_ROOT_PREFIX=/root
-RUN eval "$(./bin/micromamba shell hook -s posix)"
+RUN eval "$(./bin/micromamba shell hook -s posix)";micromamba
 
