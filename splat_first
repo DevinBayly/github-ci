@@ -19,3 +19,4 @@ ENV MAMBA_ROOT_PREFIX=/root
 COPY splatting_environment.yaml environment.yml
 
 RUN eval "$(./bin/micromamba shell hook -s posix)";micromamba env create --file environment.yml
+
