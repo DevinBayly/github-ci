@@ -92,4 +92,4 @@ RUN git clone https://github.com/graphdeco-inria/gaussian-splatting --recursive
 
 WORKDIR gaussian-splatting
 # # try to use the mamba program before we have the environment setup
-RUN eval "$(./bin/micromamba shell hook -s posix)";micromamba env create --file environment.yml
+# RUN eval "$(./bin/micromamba shell hook -s posix)";micromamba env create --file environment.yml
