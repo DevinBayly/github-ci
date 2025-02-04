@@ -6,8 +6,8 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt update
 ## set up the micromamba stuff
 RUN apt install -y curl git
-#RUN curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
-#ENV MAMBA_ROOT_PREFIX=/root
+RUN curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
+ENV MAMBA_ROOT_PREFIX=/root
 #RUN eval "$(./bin/micromamba shell hook -s posix)";micromamba
 
 
