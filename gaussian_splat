@@ -2,7 +2,8 @@ FROM nvcr.io/nvidia/cuda:11.8.0-devel-ubuntu22.04
 ARG UBUNTU_VERSION=22.04
 ARG NVIDIA_CUDA_VERSION=11.8.0
 
-
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt update
 ## set up the micromamba stuff
 RUN apt install -y curl
 RUN curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
