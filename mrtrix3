@@ -23,6 +23,7 @@ RUN apt-get -qq update \
         qtbase5-dev \
         zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
+RUN apt update
 RUN apt install -y git 
 # Clone, build, and install MRtrix3.
 ARG MAKE_JOBS
