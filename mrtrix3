@@ -28,7 +28,7 @@ RUN apt install -y git
 # Clone, build, and install MRtrix3.
 ARG MAKE_JOBS
 WORKDIR /opt/mrtrix3
-RUN apt install build-essential
+RUN apt install -y build-essential
 RUN git clone -b $MRTRIX3_GIT_COMMITISH --depth 1 https://github.com/MRtrix3/mrtrix3.git . \
     && python3 ./configure $MRTRIX3_CONFIGURE_FLAGS \
     && NUMBER_OF_PROCESSORS=$MAKE_JOBS python3 ./build $MRTRIX3_BUILD_FLAGS \
