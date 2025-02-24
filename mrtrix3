@@ -33,3 +33,21 @@ RUN git clone -b $MRTRIX3_GIT_COMMITISH --depth 1 https://github.com/MRtrix3/mrt
     && python3 ./configure $MRTRIX3_CONFIGURE_FLAGS \
     && NUMBER_OF_PROCESSORS=$MAKE_JOBS python3 ./build $MRTRIX3_BUILD_FLAGS \
     && rm -rf tmp
+# Download minified ART ACPCdetect (V2.0).
+WORKDIR /opt/art
+RUN curl -fsSL https://osf.io/73h5s/download \
+    | tar xz --strip-components 1
+
+# Download minified ANTs (2.3.4-2).
+WORKDIR /opt/ants
+RUN curl -fsSL https://osf.io/yswa4/download \
+    | tar xz --strip-components 1
+
+# Download FreeSurfer files.
+WORKDIR /opt/freesurfer
+RUN curl -fsSLO https://raw.githubusercontent.com/freesurfer/freesurfer/v7.1.1/distribution/FreeSurferColorLUT.txt
+
+# Download minified FSL (6.0.7.7)
+WORKDIR /opt/fsl
+RUN curl -fsSL https://osf.io/ph9ex/download \
+    | tar xz --strip-components 1
