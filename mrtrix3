@@ -33,6 +33,8 @@ RUN git clone -b $MRTRIX3_GIT_COMMITISH --depth 1 https://github.com/MRtrix3/mrt
     && python3 ./configure $MRTRIX3_CONFIGURE_FLAGS \
     && NUMBER_OF_PROCESSORS=$MAKE_JOBS python3 ./build $MRTRIX3_BUILD_FLAGS \
     && rm -rf tmp
+
+RUN apt install -y curl
 # Download minified ART ACPCdetect (V2.0).
 WORKDIR /opt/art
 RUN curl -fsSL https://osf.io/73h5s/download \
