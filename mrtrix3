@@ -98,3 +98,6 @@ WORKDIR /opt/fsl
 RUN curl -fsSL https://osf.io/ph9ex/download \
     | tar xz --strip-components 1
 
+RUN apt install -y dbus
+RUN dbus-uuidgen > etc/machine-id
+
