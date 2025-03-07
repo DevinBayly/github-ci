@@ -1,0 +1,23 @@
+# Use an official Ubuntu runtime as a parent image
+FROM ubuntu:latest
+
+# Set environment variables
+ENV DEBIAN_FRONTEND=noninteractive
+ENV JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
+
+# Install dependencies
+RUN apt-get update && \
+    apt-get install -y wget unzip openjdk-8-jdk x11-apps
+
+# Download and install ImageJ
+RUN wget https://downloads.imagej.net/fiji/latest/fiji-linux64.zip && \
+    unzip fiji-linux64.zip -d /opt && \
+    mv /opt/fiji-linux64 /opt/Fiji
+
+# Set up entry point
+#COPY ./docker-entrypoint.sh /
+#RUN chmod +x /docker-entrypoint.sh
+#ENTRYPOINT ["/docker-entrypoint.sh"]
+
+# Default command
+#CMD ["/opt/Fiji/ImageJ-linux64"]
