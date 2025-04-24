@@ -1,5 +1,5 @@
 FROM ghcr.io/selkies-project/nvidia-egl-desktop:latest
-
+ARG DEBIAN_FRONTEND=noninteractive
 RUN apt update
 RUN wget "https://github.com/topology-tool-kit/ttk-paraview/releases/download/v5.13.0/ttk-paraview-v5.13.0-ubuntu-24.04.deb"
-RUN apt install ./ttk-paraview-v5.13.0-ubuntu-24.04.deb
+RUN apt install -y ./ttk-paraview-v5.13.0-ubuntu-24.04.deb
