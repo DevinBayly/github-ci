@@ -1,5 +1,6 @@
 # syntax=docker/dockerfile:1
 # https://github.com/nerfstudio-project/nerfstudio/blob/main/Dockerfile
+# start new job
 ARG UBUNTU_VERSION=22.04
 ARG NVIDIA_CUDA_VERSION=11.8.0
 # CUDA architectures, required by Colmap and tiny-cuda-nn. Use >= 8.0 for faster TCNN.
