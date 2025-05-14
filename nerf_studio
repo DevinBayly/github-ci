@@ -90,3 +90,18 @@ RUN pip install --no-cache-dir --upgrade pip 'setuptools<70.0.0' && \
     cd /opt/hloc && git checkout v1.4 && python3.10 -m pip install --no-cache-dir . && cd ~ && \
     TCNN_CUDA_ARCHITECTURES="${CUDA_ARCHITECTURES}" pip install --no-cache-dir "git+https://github.com/NVlabs/tiny-cuda-nn.git@b3473c81396fe927293bdfd5a6be32df8769927c#subdirectory=bindings/torch" && \
     pip install --no-cache-dir pycolmap==0.6.1 pyceres==2.1 omegaconf==2.3.0
+
+    # Install gsplat and nerfstudio.
+# NOTE: both are installed jointly in order to prevent docker cache with latest
+# gsplat version (we do not expliticly specify the commit hash).
+#
+# We set MAX_JOBS to reduce resource usage for GH actions:
+# - https://github.com/nerfstudio-project/gsplat/blob/db444b904976d6e01e79b736dd89a1070b0ee1d0/setup.py#L13-L23
+COPY --from=source /tmp/nerfstudio/ /tmp/nerfstudio
+# I changed to > 50 so that the p100 60 would be allowed
+RUN export TORCH_CUDA_ARCH_LIST="$(echo "$CUDA_ARCHITECTURES" | tr ';' '\n' | awk '$0 > 50 {print substr($0,1,1)"."substr($0,2)}' | tr '\n' ' ' | sed 's/ $//')" && \
+    export MAX_JOBS=10 && \
+    GSPLAT_VERSION="$(sed -n 's/.*gsplat==\s*\([^," '"'"']*\).*/\1/p' /tmp/nerfstudio/pyproject.toml)" && \
+    pip install --no-cache-dir git+https://github.com/nerfstudio-project/gsplat.git@v${GSPLAT_VERSION} && \
+    pip install --no-cache-dir /tmp/nerfstudio 'numpy<2.0.0' && \
+    rm -rf /tmp/nerfstudio
