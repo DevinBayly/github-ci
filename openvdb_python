@@ -41,5 +41,5 @@ RUN apt install -y nanobind-dev
 RUN mkdir build
 WORKDIR build
 RUN cmake -D OPENVDB_BUILD_PYTHON_MODULE=TRUE ../
-RUN make install
+RUN make install -j 16
 RUN pip install jupyter --break-system-packages
