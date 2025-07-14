@@ -1,0 +1,45 @@
+FROM ubuntu:latest
+
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt update
+
+# Core library
+RUN apt-get install -y cmake                   # CMake
+RUN apt-get install -y libtbb-dev              # TBB
+#RUN apt-get install -y zlibc                   # zlib
+RUN apt-get install -y libboost-iostreams-dev  # Boost::iostream
+RUN apt-get install -y libblosc-dev            # Blosc
+# AX
+#RUN apt-get install -y llvm-15-dev             # LLVM
+# Python
+RUN apt-get install -y python3-dev              # Python
+RUN apt-get install -y python3-numpy            # NumPy
+RUN apt install -y python3-pip
+RUN apt install -y python3-venv
+RUN python3 -m venv ./venv
+#RUN ./venv/bin/pip install nanobind            # nanobind
+RUN pip install --break-system-packages nanobind
+# Optional
+RUN apt-get install -y libpng-dev              # libpng
+RUN apt-get install -y libopenexr-dev          # OpenEXR
+RUN apt-get install -y liblog4cplus-dev        # Log4cplus
+RUN apt-get install -y googletest              # GoogleTest
+RUN apt-get install -y libcppunit-dev          # CppUnit
+# vdb_view
+RUN apt-get install -y libglfw3-dev            # GLFW
+# Documentation
+RUN apt-get install -y doxygen                 # doxygen
+# CUDA for NanoVDB
+RUN apt-get install -y nvidia-cuda-toolkit     # CUDA
+RUN apt install -y wget
+# get the repo
+RUN wget "https://github.com/AcademySoftwareFoundation/openvdb/archive/refs/tags/v12.0.1.tar.gz"
+RUN tar xf *.tar.gz
+WORKDIR openvdb-12.0.1
+# build the actual program
+RUN apt install -y nanobind-dev
+RUN mkdir build
+WORKDIR build
+RUN cmake -D OPENVDB_BUILD_PYTHON_MODULE=TRUE ../
+RUN make install
+RUN pip install jupyter --break-system-packages
