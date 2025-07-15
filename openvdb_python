@@ -40,6 +40,6 @@ WORKDIR openvdb-12.0.1
 RUN apt install -y nanobind-dev
 RUN mkdir build
 WORKDIR build
-RUN cmake -D OPENVDB_BUILD_PYTHON_MODULE=TRUE ../
+RUN cmake -D OPENVDB_BUILD_PYTHON_MODULE=TRUE -DUSE_NUMPY=ON ../
 RUN make install -j 16
 RUN pip install jupyter --break-system-packages
