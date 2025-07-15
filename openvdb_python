@@ -37,7 +37,7 @@ RUN wget "https://github.com/AcademySoftwareFoundation/openvdb/archive/refs/tags
 RUN tar xf *.tar.gz
 WORKDIR openvdb-12.0.1
 # build the actual program
-RUN apt install -y nanobind-dev
+#RUN apt install -y nanobind-dev
 RUN mkdir build
 WORKDIR build
 RUN cmake -D OPENVDB_BUILD_PYTHON_MODULE=TRUE -DUSE_NUMPY=ON ../
