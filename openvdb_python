@@ -47,26 +47,13 @@ APT::Default-Release "jammy";
 EOF
 
 COPY <<EOF /etc/apt/sources.list
-# official ubuntu sites
-#### testing  #########
 deb http://archive.ubuntu.com/ubuntu jammy main restricted universe multiverse
-#### development #########
-deb http://archive.ubuntu.com/ubuntu noble main restricted universe multiverse
+deb-src http://archive.ubuntu.com/ubuntu noble main restricted universe multiverse
 EOF
-COPY <<EOF /etc/apt/preferences
-Package: nanobind-dev
-Pin: release n=jammy
-Pin-Priority: -10
-
-Package: nanobind-dev
-Pin: release n=noble
-Pin-Priority: 900
-EOF
-RUN cat /etc/apt/apt.conf
-RUN echo test
 RUN apt update
 # build the actual program
-RUN apt install -y nanobind-dev pkg-config
+RUN apt build-dep -y pkg-config 
+RUN apt -b source -t noble pkg-config
 #RUN mkdir build
 #WORKDIR build
 #RUN cmake -D OPENVDB_BUILD_PYTHON_MODULE=TRUE -DUSE_NUMPY=ON ../
