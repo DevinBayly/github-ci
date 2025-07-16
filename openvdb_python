@@ -18,9 +18,9 @@ RUN apt-get install -y python3-dev              # Python
 RUN apt-get install -y python3-numpy            # NumPy
 RUN apt install -y python3-pip
 RUN apt install -y python3-venv
-RUN python3 -m venv ./venv
+# RUN python3 -m venv ./venv
 #RUN ./venv/bin/pip install nanobind            # nanobind and pixars usd
-RUN pip install nanobind usd-core
+# RUN pip install nanobind usd-core
 # Optional
 RUN apt-get install -y libpng-dev              # libpng
 RUN apt-get install -y libopenexr-dev          # OpenEXR
