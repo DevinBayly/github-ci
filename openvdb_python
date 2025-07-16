@@ -1,61 +1,56 @@
 # syntax=docker/dockerfile:1.3-labs
-FROM ubuntu:22.04
+FROM ubuntu:latest
 
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update
 
 ## Core library
-#RUN apt-get install -y cmake                   # CMake
-#RUN apt-get install -y libtbb-dev              # TBB
-##RUN apt-get install -y zlibc                   # zlib
-#RUN apt-get install -y libboost-iostreams-dev  # Boost::iostream
-#RUN apt-get install -y libblosc-dev            # Blosc
-## AX
-##RUN apt-get install -y llvm-15-dev             # LLVM
-## Python
-#RUN apt-get install -y python3-dev              # Python
-#RUN apt-get install -y python3-numpy            # NumPy
-#RUN apt install -y python3-pip
-#RUN apt install -y python3-venv
-#RUN python3 -m venv ./venv
-##RUN ./venv/bin/pip install nanobind            # nanobind and pixars usd
-#RUN pip install nanobind usd-core
-## Optional
-#RUN apt-get install -y libpng-dev              # libpng
-#RUN apt-get install -y libopenexr-dev          # OpenEXR
-#RUN apt-get install -y liblog4cplus-dev        # Log4cplus
-#RUN apt-get install -y googletest              # GoogleTest
-#RUN apt-get install -y libcppunit-dev          # CppUnit
-## vdb_view
-#RUN apt-get install -y libglfw3-dev            # GLFW
-## Documentation
-#RUN apt-get install -y doxygen                 # doxygen
-## CUDA for NanoVDB
-## RUN apt-get install -y nvidia-cuda-toolkit     # CUDA
+RUN apt-get install -y cmake                   # CMake
+RUN apt-get install -y libtbb-dev              # TBB
+#RUN apt-get install -y zlibc                   # zlib
+RUN apt-get install -y libboost-iostreams-dev  # Boost::iostream
+RUN apt-get install -y libblosc-dev            # Blosc
+# AX
+#RUN apt-get install -y llvm-15-dev             # LLVM
+# Python
+RUN apt-get install -y python3-dev              # Python
+RUN apt-get install -y python3-numpy            # NumPy
+RUN apt install -y python3-pip
+RUN apt install -y python3-venv
+RUN python3 -m venv ./venv
+#RUN ./venv/bin/pip install nanobind            # nanobind and pixars usd
+RUN pip install nanobind usd-core
+# Optional
+RUN apt-get install -y libpng-dev              # libpng
+RUN apt-get install -y libopenexr-dev          # OpenEXR
+RUN apt-get install -y liblog4cplus-dev        # Log4cplus
+RUN apt-get install -y googletest              # GoogleTest
+RUN apt-get install -y libcppunit-dev          # CppUnit
+# vdb_view
+RUN apt-get install -y libglfw3-dev            # GLFW
+# Documentation
+RUN apt-get install -y doxygen                 # doxygen
+# CUDA for NanoVDB
+RUN apt-get install -y nvidia-cuda-toolkit     # CUDA
 #RUN apt install -y wget
 ## get the repo
-#RUN wget "https://github.com/AcademySoftwareFoundation/openvdb/archive/refs/tags/v12.0.1.tar.gz"
-#RUN tar xf *.tar.gz
-#WORKDIR openvdb-12.0.1
-#COPY <<'EOF' /etc/apt/apt.conf
-#APT::Default-Release "jammy";
-#EOF 
-
-copy <<EOF /etc/apt/apt.conf
-APT::Default-Release "jammy";
-EOF
-
-COPY <<EOF /etc/apt/sources.list
-deb http://archive.ubuntu.com/ubuntu jammy main restricted universe multiverse
-deb-src http://archive.ubuntu.com/ubuntu noble main restricted universe multiverse
-EOF
-RUN apt update
-# build the actual program
-RUN apt build-dep -y pkg-config 
-RUN apt -b source -t noble pkg-config
-#RUN mkdir build
-#WORKDIR build
-#RUN cmake -D OPENVDB_BUILD_PYTHON_MODULE=TRUE -DUSE_NUMPY=ON ../
-#RUN make install -j 16
+RUN apt install -y git
+RUN git clone --recurse-submodules https://github.com/wjakob/nanobind.git
+RUN ls
+WORKDIR nanobind
+RUN mkdir build
+WORKDIR build
+RUN cmake -DNB_TEST=OFF ../
+RUN make -j8 install
+WORKDIR /
+RUN apt install -y wget 
+RUN wget "https://github.com/AcademySoftwareFoundation/openvdb/archive/refs/tags/v12.0.1.tar.gz"
+RUN tar xf *.tar.gz
+RUN ls
+WORKDIR /openvdb-12.0.1
+RUN mkdir build
+WORKDIR /openvdb-12.0.1/build
+RUN cmake -D OPENVDB_BUILD_PYTHON_MODULE=TRUE -DUSE_NUMPY=ON ../
+RUN make install -j 16
 #RUN pip install jupyter --break-system-packages
