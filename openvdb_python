@@ -48,9 +48,9 @@ RUN apt install -y wget
 RUN wget "https://github.com/AcademySoftwareFoundation/openvdb/archive/refs/tags/v12.0.1.tar.gz"
 RUN tar xf *.tar.gz
 RUN ls
-WORKDIR /openvdb-12.0.1
+WORKDIR openvdb-12.0.1
 RUN mkdir build
-WORKDIR /openvdb-12.0.1/build
+WORKDIR build
 RUN cmake -D OPENVDB_BUILD_PYTHON_MODULE=TRUE -DUSE_NUMPY=ON ../
 RUN make install -j 16
 #RUN pip install jupyter --break-system-packages
