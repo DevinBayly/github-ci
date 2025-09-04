@@ -30,4 +30,5 @@ RUN curl 'https://drive.usercontent.google.com/download?id=1xi62-MxjivDjBAzHxL7O
 
 RUN mv visimages.zip work_dirs
 WORKDIR work_dirs
+RUN apt install -y unzip
 RUN unzip visimages.zip
