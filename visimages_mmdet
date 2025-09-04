@@ -10,3 +10,20 @@ RUN git clone https://github.com/VisImages/visimages-detection.git
 
 WORKDIR visimages-detection
 RUN pip install -v -e .
+RUN curl 'https://drive.usercontent.google.com/download?id=1xi62-MxjivDjBAzHxL7OCghH9xOOzaiq&export=download&authuser=0&confirm=t&uuid=4c8dd70e-3ab3-4bc2-ad1e-a8bc023fefb9&at=AN8xHopFSCX9zswX2m-NOVb8_Pjp%3A1757007328716' \
+  -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:143.0) Gecko/20100101 Firefox/143.0' \
+  -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' \
+  -H 'Accept-Language: en-US,en;q=0.5' \
+  -H 'Accept-Encoding: gzip, deflate, br, zstd' \
+  -H 'Alt-Used: drive.usercontent.google.com' \
+  -H 'Connection: keep-alive' \
+  -H 'Referer: https://drive.usercontent.google.com/' \
+  -H 'Cookie: NID=525=EyCYw9ThwuQ-TMIgjJqTY0qFInFPZfmfvf-DR-QWTanX_Ts17szmYRK6yePxXi5zqCFTNr-JVaYruRK_G0RqZeYWmy_1bDbVWA2l6q9mqQpIwpBnK2ioknY21z_U2uDivDJK_xN8-plVhtez9Mj7nOoCwxTWv0VmolbnDLt9zOdRB9aFzp4SQHcOn266zSDENJMUx9k8c6nBHWBaCdVhYjRzCmeQLY3Qu4D96vKq-kiuwOY82z_QX4gJhu-1F1w14im1yNFPVV63lsHXA_kfhkbMcFr3vLW8N11Ig7yZomBoegr6n2_yAeVWFZ5PaZS1g2scDolLOK8bamjH8K7uTsCsdtA9oLxL6uKFhKMmpqbIdAV1VZUXEUe5F6Lg; OSID=g.a0000AiZY8VQJUCfMK5sQTuGNbFJllg5EiEnmQBm_v7NwHj6OWPlOJjVCv-UFVDuW_4eIMjlsAACgYKAYYSARYSFQHGX2MiJY658nThzBcpWuCcqd1pNxoVAUF8yKqhfh5VJJoQhKL5ESqWnUyh0076; __Secure-OSID=g.a0000AiZY8VQJUCfMK5sQTuGNbFJllg5EiEnmQBm_v7NwHj6OWPlVlXGOSrVj5TQMJI5BRbcYwACgYKARQSARYSFQHGX2MiLXv0XsCryNEJdLnwdk6s7BoVAUF8yKqxx3Hrr8vAiDcGIQcrghNF0076; SID=g.a0000wiZY7_s4C0reyQzGYyEK-IldO7G3A-lDFVPCul2ixGCHvgxmfIoqbqXSrurHSnEHYNTVwACgYKAeMSARYSFQHGX2MigwraF4QHx4JUdJUM_MBboRoVAUF8yKohDqt25jtsyD-2NoCi7LM70076; __Secure-1PSID=g.a0000wiZY7_s4C0reyQzGYyEK-IldO7G3A-lDFVPCul2ixGCHvgx0QT0os74-Xieh8zbu-oxsQACgYKATISARYSFQHGX2Miy50Ct5tyinrZzNmKMc7yqRoVAUF8yKp_V6AC0B1IeBeos7GSQqRL0076; __Secure-3PSID=g.a0000wiZY7_s4C0reyQzGYyEK-IldO7G3A-lDFVPCul2ixGCHvgxg5Khj5SxgfzuORa22vKwLQACgYKATgSARYSFQHGX2Mi6TJ1iUfE-XnIsDw-2kH8dBoVAUF8yKq3rwEH9iD4qOkiZ_EeoCG50076; HSID=AvVDEpc-uca8HEkq4; SSID=AO6l1zxPqGIHrI_wM; APISID=xdKGsTYme5ggSPyh/A6GzA2xyD6Tpc7jE6; SAPISID=p-VeXe97CoutB1RW/AARLgGLQyJearzACc; __Secure-1PAPISID=p-VeXe97CoutB1RW/AARLgGLQyJearzACc; __Secure-3PAPISID=p-VeXe97CoutB1RW/AARLgGLQyJearzACc; SIDCC=AKEyXzU5clr6qFybPlVomQQ1MxpygcytLOEonQwQYRu_OMpXJK6taphKtkEJerRGfXVRzhc0BWc3; __Secure-1PSIDCC=AKEyXzVsy_0HN5SqDC8bQZucJPrznnOo7Pu9fdSlPiZVLNxIJmsaFjFMOk5EXyyAhkIYqvRBcIFn; __Secure-3PSIDCC=AKEyXzWogBGuZbmpSweby3ymNSHIv_KhaqNHufNS8OYMs8PNe9Lfuq22dopzgPTV0xnmkciPYww; __Secure-1PSIDTS=sidts-CjIB5H03P63aD7Nm3lj4ZXxVjQj9sOS5sY1o7fwb3uIWjmzOUcnfxfGZ6f5hob4Ne-K8axAA; __Secure-3PSIDTS=sidts-CjIB5H03P63aD7Nm3lj4ZXxVjQj9sOS5sY1o7fwb3uIWjmzOUcnfxfGZ6f5hob4Ne-K8axAA; AEC=AVh_V2iyxbRRd-PDodquzwwbg-h3U_ZarkybTzpYTtC_DO_LkgilCTcE_Ok' \
+  -H 'Upgrade-Insecure-Requests: 1' \
+  -H 'Sec-Fetch-Dest: document' \
+  -H 'Sec-Fetch-Mode: navigate' \
+  -H 'Sec-Fetch-Site: cross-site' \
+  -H 'Sec-Fetch-User: ?1' \
+  -H 'Priority: u=0, i' \
+  -H 'Pragma: no-cache' \
+  -H 'Cache-Control: no-cache' > visimages.zip
