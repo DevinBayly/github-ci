@@ -28,6 +28,6 @@ RUN curl 'https://drive.usercontent.google.com/download?id=1xi62-MxjivDjBAzHxL7O
   -H 'Pragma: no-cache' \
   -H 'Cache-Control: no-cache' > visimages.zip
 
-RUN mv visimages.zip work_dir
-WORKDIR work_dir
+RUN mv visimages.zip work_dirs
+WORKDIR work_dirs
 RUN unzip visimages.zip
