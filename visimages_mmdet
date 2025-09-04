@@ -3,4 +3,4 @@ FROM nvcr.io/nvidia/ai-workbench/python-cuda117:1.0.6
 RUN apt update 
 RUN apt install -y libxext6 libglib2.0-0 libx11-6
 
-RUN pip install mmcv-full==1.7.0 torch==1.13.0 torchvision=0.14.0 torchaudio=0.14.0 -f https://download.openmmlab.com/mmcv/dist/cu117/torch1.13/index.html
+RUN pip install mmcv-full==1.7.0 torch==1.13.0 torchvision==0.14.0 torchaudio==0.14.0 -f https://download.openmmlab.com/mmcv/dist/cu117/torch1.13/index.html
