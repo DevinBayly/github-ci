@@ -32,3 +32,4 @@ RUN mv visimages.zip work_dirs
 WORKDIR work_dirs
 RUN apt install -y unzip
 RUN unzip visimages.zip
+RUN apt install -y libgl1-mesa-glx
