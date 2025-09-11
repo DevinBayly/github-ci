@@ -33,3 +33,5 @@ WORKDIR work_dirs
 RUN apt install -y unzip
 RUN unzip visimages.zip
 RUN apt install -y libgl1-mesa-glx
+# fix numpy version issue, breaks opencv, but still runs the figure detector, strange
+RUN pip install "numpy<2.0"
