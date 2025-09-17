@@ -35,3 +35,4 @@ RUN unzip visimages.zip
 RUN apt install -y libgl1-mesa-glx
 # fix numpy version issue, breaks opencv, but still runs the figure detector, strange
 RUN pip install "numpy<2.0"
+RUN pip install jupyter 
