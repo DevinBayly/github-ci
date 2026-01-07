@@ -1,19 +1,101 @@
-FROM ubuntu:22.04
+FROM ros:noetic-ros-base-focal
 ARG DEBIAN_FRONTEND=noninteractive
-# switch up to use the build for ouster-sdk
 RUN apt update
-RUN apt install -y python3 python3-pip
-RUN apt-get install -y libgomp1
-RUN apt-get install -y freeglut3-dev
-RUN apt-get install -y locales
-RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
-RUN locale-gen
+RUN apt install -y libpcap-dev libtins-dev
+RUN apt install -y wget 
+RUN apt install -y                     \
+    ros-$ROS_DISTRO-pcl-ros             \
+    ros-$ROS_DISTRO-rviz
+RUN apt install -y         \
+    build-essential         \
+    libeigen3-dev           \
+    libjsoncpp-dev          \
+    libspdlog-dev           \
+    libcurl4-openssl-dev    \
+    cmake
+RUN . /opt/ros/$ROS_DISTRO/setup.sh
+WORKDIR /opt
+# using instructions from page
+RUN apt install -y git
+RUN git clone https://github.com/Krishtof-Korda/pcap-to-bag.git
+WORKDIR pcap-to-bag
+# last commit where things worked
+RUN git checkout 348371e32a5f5d0d85696d04b1af11d4bdc86783
+WORKDIR /opt
+RUN wget "https://github.com/ouster-lidar/ouster_example/archive/refs/tags/20210608.tar.gz"
+RUN tar xf 20210608.tar.gz
+RUN mv ouster_example-20210608 ouster_example
+RUN mkdir -p ouster_ros_ws/src
+WORKDIR ouster_ros_ws/src
+RUN git clone --recurse-submodules https://github.com/ouster-lidar/ouster-ros.git
+WORKDIR ../
+RUN . /opt/ros/$ROS_DISTRO/setup.sh  && catkin_make --cmake-args -DCMAKE_BUILD_TYPE=Release
+WORKDIR /opt
+RUN mkdir -p myworkspace/src
+WORKDIR myworkspace
+WORKDIR src
+RUN ln -s /opt/ouster_example 
+RUN ln -s /opt/pcap-to-bag 
+WORKDIR ../
+RUN . /opt/ros/$ROS_DISTRO/setup.sh && catkin_make -DCMAKE_BUILD_TYPE=Release
+WORKDIR /opt
+## trying to make everything in same container
+# inmstall the pcl libraries
+RUN apt install libpcl-dev
+WORKDIR /opt
+# CMake
+RUN apt-get install -y cmake
+# google-glog + gflags
+RUN apt-get install -y libgoogle-glog-dev libgflags-dev
+# Use ATLAS for BLAS & LAPACK
+RUN apt-get install -y libatlas-base-dev
+# Eigen3
+RUN apt-get install -y libeigen3-dev
+# SuiteSparse (optional)
+RUN apt-get install -y libsuitesparse-dev
+RUN wget "http://ceres-solver.org/ceres-solver-2.1.0.tar.gz"
+RUN tar  zxf ceres-solver-2.1.0.tar.gz --no-same-owner
+RUN mkdir ceres-bin
+WORKDIR ceres-bin
+RUN cmake ../ceres-solver-2.1.0
+RUN make -j3
+RUN make test
+RUN apt-get update \
+    && apt-get install -q -y openssh-client \
+    && apt-get install -q -y python3-pip \
+    && apt-get install -q -y ros-noetic-cv-bridge \
+    && apt-get install -q -y python3-opencv
+# Optionally install Ceres, it can also be exported using CMake which
+# allows Ceres to be used without requiring installation, see the documentation
+# for the EXPORT_BUILD_DIR option for more information.
+RUN make install
+## install c++ 14
+RUN apt install -y gcc-10 g++-10
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 10
 
-RUN pip install kiss-icp==0.2.10
-RUN pip install ouster-sdk
-# ensure that the full opengl stuff is installed 
-RUN pip install open3d
+RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 10
+RUN update-alternatives --set cc /usr/bin/gcc
+RUN update-alternatives --set c++ /usr/bin/g++
+RUN apt install -y libopencv-dev python3-opencv
+
+WORKDIR /opt
+RUN mkdir -p aloam_ws/src
+WORKDIR aloam_ws/src
+##
+RUN git clone --branch ouster_aloam https://github.com/DevinBayly/ouster-aloam.git
+
+WORKDIR /opt/aloam_ws
+RUN . /opt/ros/$ROS_DISTRO/setup.sh && catkin_make -DCMAKE_CXX_STANDARD=14
+RUN chmod -R a+rxw /opt
+
+# get the catkin_ws from online
+WORKDIR /opt/
+RUN mkdir -p point_aligner/src
+WORKDIR point_aligner/src
+RUN git clone https://github.com/DevinBayly/ouster_colored_point_aligner.git
+RUN ls
+RUN pwd
+WORKDIR ../
+RUN . /opt/ros/$ROS_DISTRO/setup.sh  && catkin_make --cmake-args -DCMAKE_BUILD_TYPE=Release
+RUN pip install numpy
 RUN pip install usd-core
-
-# for turning on and off the container
-RUN pip install python-openstackclient
