@@ -12,7 +12,7 @@ env:
 jobs:
   changes:
       name: "Changed Singularity Recipes"
-      runs-on: ubuntu-latest
+      runs-on: self-hosted
       # runs-on: ubuntu-latest
       outputs:
         changed_file: ${{ steps.files.outputs.added_modified }}
@@ -29,7 +29,7 @@ jobs:
   build:
     needs:
       - changes
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     permissions:
       contents: read
       packages: write
