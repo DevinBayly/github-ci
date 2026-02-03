@@ -25,6 +25,7 @@ RUN git checkout 348371e32a5f5d0d85696d04b1af11d4bdc86783
 WORKDIR /opt
 RUN wget "https://github.com/ouster-lidar/ouster_example/archive/refs/tags/20210608.tar.gz"
 RUN tar xf 20210608.tar.gz
+RUN ls 
 RUN mv ouster_example-20210608 ouster_example
 RUN mkdir -p ouster_ros_ws/src
 WORKDIR ouster_ros_ws/src
