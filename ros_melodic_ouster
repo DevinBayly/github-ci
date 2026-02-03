@@ -23,6 +23,7 @@ WORKDIR pcap-to-bag
 # last commit where things worked
 RUN git checkout 348371e32a5f5d0d85696d04b1af11d4bdc86783
 WORKDIR /opt
+RUN mkdir -p ouster_ros_ws/src
 RUN apt install -y         \
     build-essential         \
     libeigen3-dev           \
@@ -33,12 +34,12 @@ RUN apt install -y         \
     cmake
 RUN wget "https://github.com/ouster-lidar/ouster_example/archive/refs/tags/20210608.tar.gz"
 RUN tar xf 20210608.tar.gz
-RUN mv ouster-sdk-20210608 ouster_example
-RUN mkdir -p ouster_ros_ws/src
+RUN mv ouster-sdk-20210608 ouster_ros_ws/src/
+
 WORKDIR ouster_ros_ws/src
 RUN git clone --recurse-submodules https://github.com/ouster-lidar/ouster-ros.git
-WORKDIR ../
-RUN . /opt/ros/$ROS_DISTRO/setup.sh  && catkin_make --cmake-args -DCMAKE_BUILD_TYPE=Release
+# WORKDIR /opt/ouster_ros
+# RUN . /opt/ros/$ROS_DISTRO/setup.sh  && catkin_make --cmake-args -DCMAKE_BUILD_TYPE=Release
 WORKDIR /opt
 RUN mkdir -p myworkspace/src
 WORKDIR myworkspace
