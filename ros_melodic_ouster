@@ -35,8 +35,10 @@ RUN apt install -y         \
 RUN wget "https://github.com/ouster-lidar/ouster_example/archive/refs/tags/20210608.tar.gz"
 RUN tar xf 20210608.tar.gz
 RUN mv ouster-sdk-20210608 ouster_ros_ws/src/
+RUN . /opt/ros/$ROS_DISTRO/setup.sh && catkin_make -DCMAKE_BUILD_TYPE=Release
 
-WORKDIR ouster_ros_ws/src
+
+WORKDIR ouster_ros_ws
 RUN git clone --recurse-submodules https://github.com/ouster-lidar/ouster-ros.git
 # WORKDIR /opt/ouster_ros
 # RUN . /opt/ros/$ROS_DISTRO/setup.sh  && catkin_make --cmake-args -DCMAKE_BUILD_TYPE=Release
@@ -47,7 +49,7 @@ WORKDIR src
 RUN ln -s /opt/ouster_example 
 RUN ln -s /opt/pcap-to-bag 
 WORKDIR ../
-RUN . /opt/ros/$ROS_DISTRO/setup.sh && catkin_make -DCMAKE_BUILD_TYPE=Release
+RUN pwd
 WORKDIR /opt
 ## trying to make everything in same container
 # inmstall the pcl libraries
