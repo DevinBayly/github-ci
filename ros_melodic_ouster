@@ -13,6 +13,7 @@ RUN apt install -y         \
     libspdlog-dev           \
     libcurl4-openssl-dev    \
     cmake
+RUN apt install -y libopencv-dev python3-opencv
 RUN . /opt/ros/$ROS_DISTRO/setup.sh
 WORKDIR /opt
 # using instructions from page
@@ -22,6 +23,14 @@ WORKDIR pcap-to-bag
 # last commit where things worked
 RUN git checkout 348371e32a5f5d0d85696d04b1af11d4bdc86783
 WORKDIR /opt
+RUN apt install -y         \
+    build-essential         \
+    libeigen3-dev           \
+    libjsoncpp-dev          \
+    libspdlog-dev           \
+    libpcap-dev             \
+    libcurl4-openssl-dev    \
+    cmake
 RUN wget "https://github.com/ouster-lidar/ouster_example/archive/refs/tags/20210608.tar.gz"
 RUN tar xf 20210608.tar.gz
 RUN mv ouster-sdk-20210608 ouster_example
@@ -70,7 +79,7 @@ RUN apt-get update \
 # for the EXPORT_BUILD_DIR option for more information.
 RUN make install
 ## install c++ 14
-RUN apt install -y libopencv-dev python3-opencv
+
 
 WORKDIR /opt
 RUN mkdir -p aloam_ws/src
