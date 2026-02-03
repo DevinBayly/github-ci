@@ -26,7 +26,7 @@ WORKDIR /opt
 RUN wget "https://github.com/ouster-lidar/ouster_example/archive/refs/tags/20210608.tar.gz"
 RUN tar xf 20210608.tar.gz
 RUN ls 
-RUN mv ouster_example-20210608 ouster_example
+RUN mv ouster-sdk-20210608 ouster_example
 RUN mkdir -p ouster_ros_ws/src
 WORKDIR ouster_ros_ws/src
 RUN git clone --recurse-submodules https://github.com/ouster-lidar/ouster-ros.git
