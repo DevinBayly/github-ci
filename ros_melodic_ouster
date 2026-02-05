@@ -43,14 +43,16 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && catkin_make -DCMAKE_BUILD_TYPE=Release
 # RUN git clone --recurse-submodules https://github.com/ouster-lidar/ouster-ros.git
 # # WORKDIR /opt/ouster_ros
 # # RUN . /opt/ros/$ROS_DISTRO/setup.sh  && catkin_make --cmake-args -DCMAKE_BUILD_TYPE=Release
-# WORKDIR /opt
-# RUN mkdir -p myworkspace/src
-# WORKDIR myworkspace
-# WORKDIR src
-# RUN ln -s /opt/ouster_example 
-# RUN ln -s /opt/pcap-to-bag 
-# WORKDIR ../
-# RUN pwd
+WORKDIR /opt
+RUN mkdir -p myworkspace/src
+WORKDIR myworkspace
+WORKDIR src
+RUN ln -s /opt/ouster_ros_ws 
+RUN ln -s /opt/pcap-to-bag 
+WORKDIR ../
+RUN pwd
+RUN . /opt/ros/$ROS_DISTRO/setup.sh && catkin_make -DCMAKE_BUILD_TYPE=Release
+
 # WORKDIR /opt
 # ## trying to make everything in same container
 # # inmstall the pcl libraries
