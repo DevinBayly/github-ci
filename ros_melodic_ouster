@@ -35,7 +35,8 @@ RUN apt install -y         \
 RUN wget "https://github.com/ouster-lidar/ouster_example/archive/refs/tags/20210608.tar.gz"
 RUN tar xf 20210608.tar.gz
 RUN mv ouster-sdk-20210608 ouster_ros_ws/src/
-# RUN . /opt/ros/$ROS_DISTRO/setup.sh && catkin_make -DCMAKE_BUILD_TYPE=Release
+WORKDIR ouster_ros_ws
+RUN . /opt/ros/$ROS_DISTRO/setup.sh && catkin_make -DCMAKE_BUILD_TYPE=Release
 
 
 # WORKDIR ouster_ros_ws
