@@ -96,4 +96,4 @@ RUN git clone --branch ouster_aloam https://github.com/DevinBayly/ouster-aloam.g
 WORKDIR /opt/aloam_ws
 RUN . /opt/ros/$ROS_DISTRO/setup.sh && catkin_make -DCMAKE_CXX_STANDARD=14
 RUN chmod -R a+rxw /opt
-RUN apt install -y catkin_tools
+# RUN apt install -y catkin_tools
