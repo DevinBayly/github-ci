@@ -2,7 +2,7 @@ FROM nvcr.io/nvidia/pytorch:25.11-py3
 
 
 RUN curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
-ENV MAMBA_ROOT_PREFIX=/some/prefix  # optional, defaults to ~/micromamba
+ENV MAMBA_ROOT_PREFIX=$PWD
 ENV PATH=$PWD/bin:$PATH
 RUN git clone --recursive https://github.com/ByteDance-Seed/Depth-Anything-3.git
 WORKDIR Depth-Anything-3
