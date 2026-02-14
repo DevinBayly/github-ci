@@ -1,6 +1,6 @@
 FROM nvcr.io/nvidia/pytorch:25.11-py3
 
-
+RUN apt update;apt install -y curl
 RUN curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
 ENV MAMBA_ROOT_PREFIX=$PWD
 ENV PATH=$PWD/bin:$PATH
