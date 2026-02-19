@@ -8,12 +8,12 @@ RUN pip install -e . # Basic
 
 RUN pip install --no-build-isolation git+https://github.com/nerfstudio-project/gsplat.git@0b4dddf04cb687367602c01196913cde6a743d70 # for gaussian head
 WORKDIR da3_streaming
-RUN echo $'faiss-gpu-cu12 \\n \
-pandas \\n \
-prettytable \\n \
-einops \\n \
-safetensors\\n \
-numba \\n \
+RUN echo $'faiss-gpu-cu12 ; \
+pandas ; \
+prettytable ; \
+einops ; \
+safetensors ; \
+numba ; \
 pypose' > requirements.txt
 
 RUN pip install -r requirements.txt
