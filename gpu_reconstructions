@@ -11,4 +11,7 @@ WORKDIR da3_streaming
 RUN echo $'faiss-gpu-cu12 \n pandas \n prettytable \n einops \n safetensors\n numba \n pypose' > requirements.txt
 
 RUN pip install -r requirements.txt
+RUN apt install ffmpeg -y
+RUN apt install tmux -y
+RUN apt install -y libgl1-mesa-glx
 
