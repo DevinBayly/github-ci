@@ -15,5 +15,6 @@ RUN apt install ffmpeg -y
 RUN apt install tmux -y
 RUN apt install -y libgl1
 RUN pip install gradio
+RUN bash ./scripts/download_weights.sh
 
 
