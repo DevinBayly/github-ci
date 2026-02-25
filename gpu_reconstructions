@@ -14,4 +14,5 @@ RUN pip install -r requirements.txt
 RUN apt install ffmpeg -y
 RUN apt install tmux -y
 RUN apt install -y libgl1-mesa-glx
+RUN pip install gradio
 
