@@ -10,10 +10,9 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /opt
-
-COPY realityscan_0.0.12-1.deb /opt/realityscan_0.0.12-1.deb
-
+RUN wget "https://ucs-blob-store.s3-accelerate.amazonaws.com/blobs/16/bc/ae58-4424-4279-a0f0-ad9320063464?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIA2SBBZFECCYQWRK6G%2F20260302%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260302T182124Z&X-Amz-Expires=3600&X-Amz-Signature=5d948a209cf0bbc11c5158024ac368bc1d142dbd9f664fddf5d558dfa9dbb94c&X-Amz-SignedHeaders=host&response-content-disposition=inline%3Bfilename%3D%22file.bin%22%3Bfilename%2A%3DUTF-8%27%27RealityScan-2.1.deb&x-id=GetObject" -O realityscan_2.1.deb
+RUN mv realityscan_2.1.deb /opt/
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends /opt/realityscan_0.0.12-1.deb && \
+    apt-get install -y --no-install-recommends /opt/realityscan_2.1.deb && \
     rm -rf /var/lib/apt/lists/*
 CMD ["bash"]
