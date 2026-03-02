@@ -1,0 +1,19 @@
+FROM ubuntu:22.04
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+      curl wget bzip2 xz-utils x11-apps ca-certificates \
+      libgtk-3-0 libdbus-glib-1-2 libxt6 \
+      libx11-xcb1 libxcb-shm0 libxcb-dri3-0 \
+      libvulkan1 vulkan-tools \
+      libxcomposite1 libasound2 && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p /opt
+
+COPY realityscan_0.0.12-1.deb /opt/realityscan_0.0.12-1.deb
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends /opt/realityscan_0.0.12-1.deb && \
+    rm -rf /var/lib/apt/lists/*
+CMD ["bash"]
