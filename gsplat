@@ -1,6 +1,7 @@
 FROM nvcr.io/nvidia/pytorch:25.11-py3
 
 RUN pip install git+https://github.com/nerfstudio-project/gsplat.git --no-build-isolation
+RUN apt update
 RUN apt-get install \
     git \
     cmake \
