@@ -1,5 +1,5 @@
 FROM nvcr.io/nvidia/pytorch:25.11-py3
 
 RUN git clone -b main https://github.com/microsoft/TRELLIS.2.git --recursive
-RUN wget "curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba"
+RUN curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
 
