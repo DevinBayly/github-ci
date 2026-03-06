@@ -58,14 +58,7 @@ fi
 
 # Get system information
 WORKDIR=$(pwd)
-if command -v nvidia-smi > /dev/null; then
-    PLATFORM="cuda"
-elif command -v rocminfo > /dev/null; then
-    PLATFORM="hip"
-else
-    echo "Error: No supported GPU found"
-    exit 1
-fi
+PLATFORM="cuda"
 
 if [ "$NEW_ENV" = true ] ; then
     micromamba create -n trellis2 python=3.10
