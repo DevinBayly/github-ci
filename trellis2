@@ -1,15 +1,4 @@
-FROM nvcr.io/nvidia/pytorch:25.11-py3
+FROM nvcr.io/nvidia/pytorch:24.06-py3
 WORKDIR /
 RUN git clone -b main https://github.com/microsoft/TRELLIS.2.git --recursive
-RUN curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
 
-
-ENV MAMBA_ROOT_PREFIX=/root
-RUN eval "$(./bin/micromamba shell hook -s posix)";micromamba
-
-
-WORKDIR TRELLIS.2
-# # try to use the mamba program before we have the environment setup
-# try to overwrite the setup with micromamba mentions instead
-COPY tsetup.sh .
-RUN bash ./tsetup.sh --new-env --basic --flash-attn --nvdiffrast --nvdiffrec --cumesh --o-voxel --flexgemm
