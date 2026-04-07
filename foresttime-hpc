@@ -1,4 +1,5 @@
 FROM ubuntu:22.04
+RUN apt update
 RUN apt install -y --no-install-recommends ca-certificates curl gpg software-properties-common
 RUN curl -fsSL https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | gpg --dearmor -o /usr/share/keyrings/cran.gpg
 RUN echo "X-Repolib-Name: CRAN \
