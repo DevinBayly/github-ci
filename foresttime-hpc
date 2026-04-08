@@ -21,7 +21,7 @@ RUN apt install -y libuv1
 RUN apt install -y cmake
 RUN R CMD INSTALL fs_2.0.1.tar.gz
 RUN wget "https://cran.r-project.org/src/contrib/dplyr_1.2.1.tar.gz"
-RUN R CMD INSTALL dplyr_1.2.0.tar.gz
+RUN R CMD INSTALL dplyr_1.2.1.tar.gz
 RUN wget "https://cran.r-project.org/src/contrib/nanoparquet_0.4.3.tar.gz"
 RUN R CMD INSTALL nanoparquet_0.4.3.tar.gz
 RUN wget "https://cran.r-project.org/src/contrib/purrr_1.2.1.tar.gz"
