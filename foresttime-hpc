@@ -2,10 +2,6 @@ FROM ubuntu:22.04
 RUN apt update
 RUN apt install -y --no-install-recommends ca-certificates curl gpg software-properties-common
 RUN curl -fsSL https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | gpg --dearmor -o /usr/share/keyrings/cran.gpg
-COPY <<EOF /etc/apt/sources.list.d/custom.list
-deb http://ubuntu.com jammy main restricted
-deb http://ubuntu.com jammy-updates main restricted
-EOF
 COPY <<EOF /etc/apt/sources.list.d/cran.sources
 X-Repolib-Name: CRAN 
 Types: deb 
