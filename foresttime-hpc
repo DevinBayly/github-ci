@@ -25,4 +25,4 @@ RUN R -e "install.packages('nanoparquet',dependencies=TRUE, repos='http://cran.r
 RUN R -e "install.packages('purrr',dependencies=TRUE, repos='http://cran.rstudio.com/')" 
 RUN R -e "install.packages('dplyr',dependencies=TRUE, repos='http://cran.rstudio.com/')" 
 RUN wget "https://github.com/Evans-Ecology-Lab/forestTIME/archive/refs/tags/v2.2.0.tar.gz" -O ftime2.2.0.tar.gz
-#RUN R CMD INSTALL ftime2.2.0.tar.gz
+RUN R -e "install.packages('forestTIME', repos = c('https://cct-datascience.r-universe.dev', getOption('repos')))"
