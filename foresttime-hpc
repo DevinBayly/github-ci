@@ -27,3 +27,4 @@ RUN R -e "install.packages('dplyr',dependencies=TRUE, repos='http://cran.rstudio
 RUN apt install -y  libcurl4-openssl-dev libsecret-1-dev
 RUN R -e "install.packages('pak',dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN R -e "pak::pak('Evans-Ecology-Lab/forestTIME')"
+RUN R -e "install.packages('httr2',dependencies=TRUE, repos='http://cran.rstudio.com/')"
