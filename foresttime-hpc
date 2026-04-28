@@ -23,8 +23,7 @@ RUN R CMD INSTALL fs_2.0.1.tar.gz
 RUN R -e "install.packages('dplyr',dependencies=TRUE, repos='http://cran.rstudio.com/')" 
 RUN R -e "install.packages('nanoparquet',dependencies=TRUE, repos='http://cran.rstudio.com/')" 
 RUN R -e "install.packages('purrr',dependencies=TRUE, repos='http://cran.rstudio.com/')" 
-RUN R -e "install.packages('dplyr',dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN apt install -y  libcurl4-openssl-dev libsecret-1-dev
 RUN R -e "install.packages('pak',dependencies=TRUE, repos='http://cran.rstudio.com/')"
-RUN R -e "pak::pak('Evans-Ecology-Lab/forestTIME')"
+#RUN R -e "pak::pak('Evans-Ecology-Lab/forestTIME')"
 RUN R -e "install.packages('httr2',dependencies=TRUE, repos='http://cran.rstudio.com/')"
