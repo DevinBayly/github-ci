@@ -16,7 +16,8 @@ RUN apt update
 RUN apt install r-base -y wget 
 RUN wget "https://cran.r-project.org/src/contrib/jsonlite_2.0.0.tar.gz"
 RUN R CMD INSTALL jsonlite_2.0.0.tar.gz
-RUN wget "https://cran.r-project.org/src/contrib/fs_2.0.1.tar.gz"
+
+RUN wget "https://cran.r-project.org/src/contrib/fs_2.1.0.tar.gz"
 RUN apt install -y libuv1
 RUN apt install -y cmake
 RUN R CMD INSTALL fs_2.0.1.tar.gz
