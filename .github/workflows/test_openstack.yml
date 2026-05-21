@@ -1,0 +1,16 @@
+on:
+  workflow_dispatch: 
+    
+
+name: test.yml
+
+jobs:
+  test_openstack:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: check directory contents
+        run: ls -rtlha
+      - name: install openstack
+        run: pip install python-openstackclient
+      
