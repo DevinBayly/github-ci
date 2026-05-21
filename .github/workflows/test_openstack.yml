@@ -13,4 +13,11 @@ jobs:
         run: ls -rtlha
       - name: install openstack
         run: pip install python-openstackclient
-      
+      - run: echo "$OPENSTACK_CLOUD" ~/.config/openstack/clouds.yaml
+        env:
+          OPENSTACK_CLOUD: ${{ secrets.OPENSTACK_CLOUD}}
+      - run: openstack --os-cloud=$CLOUD_NAME server list 
+        env:
+          CLOUD_NAME: ${{secrets.CLOUD_NAME}}
+          OPENSTACK_CLOUD: ${{ secrets.OPENSTACK_CLOUD}}
+          
