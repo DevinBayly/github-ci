@@ -20,7 +20,7 @@ RUN R CMD INSTALL jsonlite_2.0.0.tar.gz
 RUN wget "https://cran.r-project.org/src/contrib/fs_2.1.0.tar.gz"
 RUN apt install -y libuv1
 RUN apt install -y cmake
-RUN apt install -y libcurl4-openssl-dev
+RUN apt install -y libcurl4-openssl-dev libuv1-dev gdal-bin libabsl-dev libgdal-dev libgeos-dev libproj-dev libsqlite3-dev  libssl-dev       libudunits2-dev  libuv1-dev  pandoc
 RUN R -e "install.packages('pak',dependencies=TRUE, repos='http://cran.rstudio.com/')"
 #RUN R -e "pak::pak('fs')"
 #RUN R CMD INSTALL fs_2.1.0.tar.gz
