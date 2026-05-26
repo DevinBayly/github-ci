@@ -23,13 +23,10 @@ RUN apt install -y cmake
 RUN apt install -y libcurl4-openssl-dev libuv1-dev libxml2-dev libssl-dev libudunits2-dev
 RUN R -e "install.packages('fs',dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('pak',dependencies=TRUE, repos='http://cran.rstudio.com/')"
-#RUN R -e "pak::pak('fs')"
-#RUN R CMD INSTALL fs_2.1.0.tar.gz
-#RUN R -e "install.packages('dplyr',dependencies=TRUE, repos='http://cran.rstudio.com/')" 
-#RUN R -e "install.packages('nanoparquet',dependencies=TRUE, repos='http://cran.rstudio.com/')" 
-#RUN R -e "install.packages('purrr',dependencies=TRUE, repos='http://cran.rstudio.com/')" 
-#RUN apt install -y  libcurl4-openssl-dev libsecret-1-dev
-#RUN R -e "install.packages('pak',dependencies=TRUE, repos='http://cran.rstudio.com/')"
-#RUN R -e "pak::pak('Evans-Ecology-Lab/forestTIME')"
-#RUN R -e "install.packages('httr2',dependencies=TRUE, repos='http://cran.rstudio.com/')"
-#RUN apt install -y libudunits2-dev libssl-dev
+RUN R -e "install.packages('dplyr',dependencies=TRUE, repos='http://cran.rstudio.com/')" 
+RUN R -e "install.packages('nanoparquet',dependencies=TRUE, repos='http://cran.rstudio.com/')" 
+RUN R -e "install.packages('purrr',dependencies=TRUE, repos='http://cran.rstudio.com/')" 
+RUN apt install -y  libcurl4-openssl-dev libsecret-1-dev
+RUN R -e "install.packages('pak',dependencies=TRUE, repos='http://cran.rstudio.com/')"
+RUN R -e "pak::pak('Evans-Ecology-Lab/forestTIME')"
+RUN R -e "install.packages('httr2',dependencies=TRUE, repos='http://cran.rstudio.com/')"
