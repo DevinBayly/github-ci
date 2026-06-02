@@ -22,4 +22,28 @@ jobs:
         env:
           CLOUD_NAME: ${{secrets.CLOUD_NAME}}
           OPENSTACK_CLOUD: ${{ secrets.OPENSTACK_CLOUD}}
+      - run: python3 - << EOF
+import openstack
+
+# Initialize connection from a clouds.yaml by passing a cloud name
+conn = openstack.connect(cloud='TRA220030_IU')
+print("con", conn)
+server_id =""
+for server in conn.compute.servers():
+    print(server)
+    if server.name =="actions-runner":
+        if server.status =="ACTIVE":
+            server.shelve(conn.compute)
+            # use the built in wait for server
+            conn.compute.wait_for_server(server,"SHELVED_OFFLOADED",wait=5*60)
+            print("we have reached shelved complete")
+        elif server.status =="SHELVED_OFFLOADED":
+            server.unshelve(conn.compute)
+            # use the built in wait for server
+            conn.compute.wait_for_server(server,"ACTIVE",wait=5*60)
+            print("we have reached unshelved complete")
+        break
+
+
+EOF
           
