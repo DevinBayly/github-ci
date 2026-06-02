@@ -9,8 +9,47 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: test_cache
 
+
+
 jobs:
+  turn_on_self_hosted:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: check directory contents
+        run: ls -rtlha
+      - name: install openstack
+        run: pip install python-openstackclient
+      - run: |
+            mkdir -p ~/.config/openstack
+            echo "$OPENSTACK_CLOUD" > ~/.config/openstack/clouds.yaml
+        env:
+          OPENSTACK_CLOUD: ${{ secrets.OPENSTACK_CLOUD}}
+      - run: openstack --os-cloud=$CLOUD_NAME server list 
+        env:
+          CLOUD_NAME: ${{secrets.CLOUD_NAME}}
+          OPENSTACK_CLOUD: ${{ secrets.OPENSTACK_CLOUD}}
+      - run: |
+             python3 - << EOF
+             import openstack
+
+             # Initialize connection from a clouds.yaml by passing a cloud name
+             conn = openstack.connect(cloud='TRA220030_IU')
+             print("con", conn)
+             server_id =""
+             for server in conn.compute.servers():
+                 print(server)
+                 if server.name =="actions-runner":
+                     if server.status =="SHELVED_OFFLOADED":
+                         server.unshelve(conn.compute)
+                         # use the built in wait for server
+                         conn.compute.wait_for_server(server,"ACTIVE",wait=5*60)
+                         print("we have reached unshelved complete")
+                     break
+             EOF
   changes:
+      needs: 
+        - turn_on_self_hosted
       name: "Changed Singularity Recipes"
       runs-on: self-hosted
       # runs-on: ubuntu-latest
@@ -64,4 +103,40 @@ jobs:
           push: true
           cache-from: type=registry,ref=ghcr.io/devinbayly/${{matrix.changed_file}}:buildcache
           cache-to: type=registry,ref=ghcr.io/devinbayly/${{matrix.changed_file}}:buildcache,mode=max
-          
+  turn_off_self_hosted:
+    needs:
+      - build
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: check directory contents
+        run: ls -rtlha
+      - name: install openstack
+        run: pip install python-openstackclient
+      - run: |
+            mkdir -p ~/.config/openstack
+            echo "$OPENSTACK_CLOUD" > ~/.config/openstack/clouds.yaml
+        env:
+          OPENSTACK_CLOUD: ${{ secrets.OPENSTACK_CLOUD}}
+      - run: openstack --os-cloud=$CLOUD_NAME server list 
+        env:
+          CLOUD_NAME: ${{secrets.CLOUD_NAME}}
+          OPENSTACK_CLOUD: ${{ secrets.OPENSTACK_CLOUD}}
+      - run: |
+             python3 - << EOF
+             import openstack
+
+             # Initialize connection from a clouds.yaml by passing a cloud name
+             conn = openstack.connect(cloud='TRA220030_IU')
+             print("con", conn)
+             server_id =""
+             for server in conn.compute.servers():
+                 print(server)
+                 if server.name =="actions-runner":
+                     if server.status =="ACTIVE":
+                         server.shelve(conn.compute)
+                         # use the built in wait for server
+                         conn.compute.wait_for_server(server,"SHELVED_OFFLOADED",wait=5*60)
+                         print("we have reached shelved complete")
+                     break
+             EOF
