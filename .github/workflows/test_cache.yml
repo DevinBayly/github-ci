@@ -79,6 +79,8 @@ jobs:
         changed_file: ${{ fromJSON(needs.changes.outputs.changed_file) }}
     name: Check ${{matrix.changed_file}}
     steps:
+      - name: docker restart
+        run: sudo systemctl restart docker
       - name: Checkout repository
         uses: actions/checkout@v4
 
