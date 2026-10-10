@@ -1,0 +1,91 @@
+# =========================================================
+# STAGE 1: BUILD ENVIRONMENT
+# =========================================================
+FROM nvidia/cuda:12.4.1-devel-ubuntu22.04 AS builder
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV CMAKE_BUILD_PARALLEL_LEVEL=4
+
+# Install build essentials & dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    cmake \
+    git \
+    wget \
+    zlib1g-dev \
+    libfftw3-dev \
+    libboost-all-dev \
+    libeigen3-dev \
+    libgl1-mesa-dev \
+    libglu1-mesa-dev \
+    libxt-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /opt/src
+
+# 1. Build & Install ITK (Insight Toolkit v6.0b02)
+RUN git clone --depth 1 --branch v6.0b02 https://github.com/InsightSoftwareConsortium/ITK.git ITK-src && \
+    mkdir -p ITK-src/build && cd ITK-src/build && \
+    cmake .. \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_TESTING=OFF \
+        -DBUILD_EXAMPLES=OFF && \
+    make -j$(nproc) && \
+    make install && \
+    cd /opt/src && rm -rf ITK-src
+
+# 2. Build & Install VTK (v9.3.0) for ComputeGlyphMaps
+RUN wget -q https://www.vtk.org/files/release/9.3/VTK-9.3.0.tar.gz && \
+    tar -xzf VTK-9.3.0.tar.gz && rm VTK-9.3.0.tar.gz && \
+    mkdir -p VTK-9.3.0/build && cd VTK-9.3.0/build && \
+    cmake .. \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_TESTING=OFF \
+        -DVTK_BUILD_EXAMPLES=OFF && \
+    make -j$(nproc) && \
+    make install && \
+    cd /opt/src && rm -rf VTK-9.3.0
+
+# 3. Build TORTOISE V4 with CUDA and VTK enabled
+RUN git clone https://github.com/QMICodeBase/TORTOISEV4.git && \
+    cd TORTOISEV4/TORTOISEV4 && \
+    cmake . \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DUSECUDA=1 \
+        -DUSE_VTK=1 \
+        -DITK_DIR=/usr/local/lib/cmake/ITK-6.0 \
+        -DVTK_DIR=/usr/local/lib/cmake/vtk-9.3 && \
+    make -j$(nproc)
+
+# =========================================================
+# STAGE 2: RUNTIME ENVIRONMENT
+# =========================================================
+FROM nvidia/cuda:12.4.1-runtime-ubuntu22.04 AS runner
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PATH="/opt/tortoise/bin:${PATH}"
+ENV LD_LIBRARY_PATH="/usr/local/lib:${LD_LIBRARY_PATH}"
+
+# Install runtime dependencies required by binaries
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    zlib1g \
+    libfftw3-double3 \
+    libboost-system1.74.0 \
+    libboost-filesystem1.74.0 \
+    libboost-program-options1.74.0 \
+    libgl1-mesa-glx \
+    libglu1-mesa \
+    libxt6 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy installed ITK/VTK shared libraries from builder
+COPY --from=builder /usr/local/lib /usr/local/lib
+
+# Copy compiled TORTOISE executables (including ComputeGlyphMaps)
+WORKDIR /opt/tortoise/bin
+COPY --from=builder /opt/src/TORTOISEV4/TORTOISEV4/bin/ /opt/tortoise/bin/
+
+WORKDIR /data
+
+# Default executable test
+CMD ["ComputeGlyphMaps"]
