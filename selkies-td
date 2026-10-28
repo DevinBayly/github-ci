@@ -2,3 +2,4 @@ FROM ghcr.io/selkies-project/selkies-egl-desktop:26.04-20261024101515
 
 RUN curl -sSL https://raw.githubusercontent.com/ismail-bahloul/TouchDesigner-Linux/main/install.sh > install.sh
 RUN xvfb-run bash install.sh --install -n --debug; exit 0
+RUN sudo chown -R ubuntu:ubuntu /home/ubuntu/.local/share/touchdesigner-linux/
