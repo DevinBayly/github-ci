@@ -1,0 +1,4 @@
+FROM ghcr.io/selkies-project/selkies-egl-desktop:26.04-20261024101515
+
+RUN curl -sSL https://raw.githubusercontent.com/ismail-bahloul/TouchDesigner-Linux/main/install.sh > install.sh
+RUN bash install.sh 1 -n
