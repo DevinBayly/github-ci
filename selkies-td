@@ -1,6 +1,7 @@
 FROM ghcr.io/selkies-project/selkies-egl-desktop:26.04-20261024101515
 
+RUN apt-get update && apt-get install -y xvfb
 RUN curl -sSL https://raw.githubusercontent.com/ismail-bahloul/TouchDesigner-Linux/main/install.sh > install.sh
-RUN bash install.sh --install -n --debug; exit 0
+RUN xvfb-run bash install.sh --install -n --debug; exit 0
 # try a second time since sometimes that works
-RUN bash install.sh --install -n --debug
+RUN xvfb-run bash install.sh --install -n --debug
