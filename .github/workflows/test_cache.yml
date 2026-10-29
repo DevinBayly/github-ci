@@ -88,20 +88,15 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
       - name: Build and cache Docker image
         uses: docker/build-push-action@v6
-        env:
-          DOCKER_BUILDKIT: 1
-          BUILDKIT_PROGRESS: plain
         with:
           context: .
           file: ./${{matrix.changed_file}}
           tags: ghcr.io/devinbayly/${{matrix.changed_file}}:latest
           push: true
-          cache-from: type=registry,ref=ghcr.io/devinbayly/${{matrix.changed_file}}:buildcache
-          cache-to: type=registry,ref=ghcr.io/devinbayly/${{matrix.changed_file}}:buildcache,mode=max
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
   turn_off_self_hosted:
     needs:
       - build
