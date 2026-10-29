@@ -3,6 +3,10 @@ name: Docker Build with Layer Caching
 on:
   push:
     branches: [ main ]
+    paths-ignore:
+      - '.github/workflows/**'
+      - '**/*.yml'
+      - '**/*.yaml'
   workflow_dispatch:
 
 env:
@@ -87,7 +91,12 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
+          
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver: docker-container
+          
       - name: Build and cache Docker image
         uses: docker/build-push-action@v6
         with:
