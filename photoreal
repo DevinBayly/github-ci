@@ -1,0 +1,52 @@
+FROM nvidia/cuda:12.8.0-cudnn-devel-ubuntu22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Python 3.11 (22.04 ships 3.10; the tested env is 3.11)
+RUN apt-get update && apt-get install -y software-properties-common \
+ && add-apt-repository -y ppa:deadsnakes/ppa \
+ && apt-get update && apt-get install -y \
+      python3.11 python3.11-venv python3.11-dev python3-pip git curl
+
+# uv for fast, reproducible installs
+RUN pip3 install --no-cache-dir uv
+
+WORKDIR /work
+RUN apt-get update && apt-get install -y git \
+ && git clone https://github.com/facebookresearch/egocentric_splats.git \
+ && cd egocentric_splats \
+ && git clone https://github.com/facebookresearch/Meta-Passthrough-Camera-API-Samples.git
+
+# Virtualenv + pinned deps (versions below are the tested set)
+RUN uv venv --python python3.11 .venv \
+ && . .venv/bin/activate \
+ && uv pip install \
+      torch==2.8.0+cu128 torchvision==0.23.0+cu128 --index-url https://download.pytorch.org/whl/cu128 \
+ && uv pip install -r egocentric_splats/requirements.txt \
+ # requirements.txt says gsplat>=1.4.0; the PyPI wheel ships NO compiled
+ # extension (pure-python sdist fallback breaks at import). Force a source
+ # build against the container's CUDA 12.8 toolkit:
+ && uv pip install --reinstall --no-binary gsplat -v gsplat==1.5.3 \
+ # opencv 5.0.0 broke cv2.stereoRectify — pin the tested 4.11
+ && uv pip install "opencv-python==4.11.0.86"
+
+# Patch the repo's MCMC config bug: model/vanilla_gsplat.py reads
+# opt.mcmc_strategy.refine_start_iter/refine_stop_iter/min_opacity (unprefixed)
+# but the YAML only defines the mcmc_-prefixed names -> Hydra error on every
+# 3DGS+MCMC run. Add the unprefixed aliases.
+RUN cd egocentric_splats && python3.11 - <<'EOF'
+p = "conf/opt/simple_gsplat_30K.yaml"
+s = open(p).read()
+s = s.replace(
+    "  mcmc_min_opacity: 0.005\n",
+    "  mcmc_min_opacity: 0.005\n"
+    "  # aliases: model/vanilla_gsplat.py reads these unprefixed names\n"
+    "  refine_start_iter: 500\n"
+    "  refine_stop_iter: 25_000\n"
+    "  min_opacity: 0.005\n",
+)
+open(p, "w").write(s)
+EOF
+
+ENV PATH="/work/.venv/bin:$PATH"
+WORKDIR /work/egocentric_splats
