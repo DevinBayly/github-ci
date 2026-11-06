@@ -14,8 +14,7 @@ RUN pip3 install --no-cache-dir uv
 WORKDIR /work
 RUN apt-get update && apt-get install -y git \
  && git clone https://github.com/facebookresearch/egocentric_splats.git \
- && cd egocentric_splats \
- && git clone https://github.com/facebookresearch/Meta-Passthrough-Camera-API-Samples.git
+ && cd egocentric_splats 
 
 # Virtualenv + pinned deps (versions below are the tested set)
 RUN uv venv --python python3.11 .venv \
